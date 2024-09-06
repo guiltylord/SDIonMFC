@@ -5,6 +5,7 @@
 #include "pch.h"
 #include "framework.h"
 #include <cmath>
+#include <vector>
 // SHARED_HANDLERS можно определить в обработчиках фильтров просмотра реализации проекта ATL, эскизов
 // и поиска; позволяет совместно использовать код документа в данным проекте.
 #ifndef SHARED_HANDLERS
@@ -17,6 +18,10 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+using namespace std;
+
+
+__declspec(dllexport)
 
 const double PI = 3.141592653589793;
 
@@ -69,9 +74,28 @@ void CFooView::OnDraw(CDC* pDC)
 
 	// TODO: добавьте здесь код отрисовки для собственных данных
 
-	pDC->LineTo(rc.Width() / 2, rc.Height() / 2);
+	// Устанавливаем параметры синусоиды
+	int amplitude = rc.Height()/2; // амплитуда
+	int frequency = PI/2;  // частота
+	int centerY = rc.Height() / 2; // вертикальный центр
+	int acc = rc.Width();
+
+	pDoc->drawMidLine(rc, &pDC);
+
+	CPoint* k = new CPoint[acc];
+	// Рисуем синусоиду
+	for (int x = 0; x < acc; x++)
+	{
+		int y = centerY + (amplitude * -sin(frequency * 2 * PI * x / rc.Width()));
+		if (x == 0)
+			k[x] = CPoint(x, y);
+		else
+			k[x] = CPoint(x, y);
+	}
 	
+	pDC->Polyline(k, acc);
 	pDC->SelectObject(&oldPen);
+	delete [] k;
 }
 
 

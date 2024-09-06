@@ -2,7 +2,7 @@
 // FooDoc.h: интерфейс класса CFooDoc 
 //
 
-
+__declspec(dllexport)
 #pragma once
 
 class cl
@@ -25,6 +25,9 @@ public:
 	int Px, Py, Pz;
 
 	cl data;
+
+	void drawMidLine(CRect rc, CDC pDC) {};
+	void makePointsWithAccur(int accurancy, CPoint* lPoints) {};
 // Операции
 public:
 // Переопределение

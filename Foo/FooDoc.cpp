@@ -50,8 +50,18 @@ BOOL CFooDoc::OnNewDocument()
 	return TRUE;
 }
 
+void drawMidLine(CRect rc, CDC pDC)
+{
+	int y = rc.Height() / 2;
+	pDC.MoveTo(0, y);
+	pDC.LineTo(rc.Width(), y);
+}
 
 
+void makePointsWithAccur(int accurancy, CPoint* lPoints) 
+{
+
+}
 
 // Сериализация CFooDoc
 
