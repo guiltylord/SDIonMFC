@@ -26,8 +26,8 @@ public:
 
 	cl data;
 
-	 static void drawMidLine(CRect rc, CDC *pDC) {};
-	void makePointsWithAccur(int accurancy, CPoint* lPoints) {};
+	void DrawSineWave(CDC* pDC);
+	void DrawHorizontalLine(CDC* pDC);
 // Операции
 public:
 // Переопределение

@@ -50,21 +50,49 @@ BOOL CFooDoc::OnNewDocument()
 	return TRUE;
 }
 
-void drawMidLine(CRect rc, CDC *pDC)
+void CFooDoc::DrawSineWave(CDC* pDC)
 {
-	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
-	CPen* oldPen = pDC->SelectObject(&pen);
+	CRect rect;
+	pDC->GetClipBox(&rect);
 
-	int y = rc.Height() / 2;
-	pDC->MoveTo(0, y);
-	pDC->LineTo(rc.Width(), y);
+	const int width = rect.Width();
+	const int height = rect.Height();
+	const double pi = 3.14159265358979323846;
+
+	CPen pen(PS_SOLID, 2, RGB(0, 0, 255)); // Синий цвет
+	CPen* pOldPen = pDC->SelectObject(&pen);
+
+	for (int x = 0; x < width; ++x) {
+		double radians = (2 * pi * x) / width; // Один период
+		int y = ((height / 2) + (height / 4) * sin(radians)); // Центрируем и масштабируем
+
+		if (x > 0) {
+			pDC->LineTo(x, y);
+		}
+		else {
+			pDC->MoveTo(x, y);
+		}
+	}
+
+	pDC->SelectObject(pOldPen);
 }
 
-
-void makePointsWithAccur(int accurancy, CPoint* lPoints) 
+void CFooDoc::DrawHorizontalLine(CDC* pDC)
 {
+	CRect rect;
+	pDC->GetClipBox(&rect);
 
+	int height = rect.Height();
+
+	CPen pen(PS_SOLID, 1, RGB(255, 0, 0)); // Красный цвет
+	CPen* pOldPen = pDC->SelectObject(&pen);
+
+	pDC->MoveTo(0, height / 2);
+	pDC->LineTo(rect.Width(), height / 2);
+
+	pDC->SelectObject(pOldPen);
 }
+
 
 // Сериализация CFooDoc
 

@@ -66,36 +66,8 @@ void CFooView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 	
-	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
-	CPen * oldPen = pDC->SelectObject(&pen);
-	
-	CRect rc;
-	GetClientRect(&rc);
-
-	// TODO: добавьте здесь код отрисовки для собственных данных
-
-	// Устанавливаем параметры синусоиды
-	int amplitude = rc.Height()/2; // амплитуда
-	int frequency = PI/2;  // частота
-	int centerY = rc.Height() / 2; // вертикальный центр
-	int acc = rc.Width();
-
-	pDoc->drawMidLine(rc, pDC);
-
-	CPoint* k = new CPoint[acc];
-	// Рисуем синусоиду
-	for (int x = 0; x < acc; x++)
-	{
-		int y = centerY + (amplitude * -sin(frequency * 2 * PI * x / rc.Width()));
-		if (x == 0)
-			k[x] = CPoint(x, y);
-		else
-			k[x] = CPoint(x, y);
-	}
-	
-	pDC->Polyline(k, acc);
-	pDC->SelectObject(&oldPen);
-	delete [] k;
+	pDoc->DrawSineWave(pDC);       // Рисуем синусоиду
+	pDoc->DrawHorizontalLine(pDC);
 }
 
 
