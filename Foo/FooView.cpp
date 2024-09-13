@@ -120,8 +120,9 @@ void CFooView::drawSin()
 
 	CDC* pDC = this->GetWindowDC();
 
-	CPen pen(PS_SOLID, 2, RGB(0, 0, 255));
-	CPen* pOldPen = pDC->SelectObject(&pen);
+	CPen penBlue (PS_SOLID, 1, RGB(0, 0, 255));
+	CPen penYellow(PS_SOLID, 1, RGB(150, 50, 200));
+	CPen* pOldPen = pDC->SelectObject(&penBlue);
 
 	int acc = rc.Width();
 	int height = rc.Height() / 2;
@@ -135,22 +136,24 @@ void CFooView::drawSin()
 
 		if (x >= acc / 2 && x % 10 == 0)
 		{
+
+			//CPen* pOldPen = pDC->SelectObject(&penYellow);
 			pDC->MoveTo(x, height);
 			pDC->LineTo(x, y);
 		}
 
-		if (x > 0)
-		{
+		//CPen* pOldPen = pDC->SelectObject(&penBlue);
+		if (x > 0) {
 			pDC->LineTo(x, y);
 		}
-		else
-		{
+		else {
 			pDC->MoveTo(x, y);
 		}
 	}
 
 	pDC->SelectObject(pOldPen);
 }
+
 
 void CFooView::drawLine()
 {
