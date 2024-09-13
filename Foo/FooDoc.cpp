@@ -55,16 +55,17 @@ BOOL CFooDoc::OnNewDocument()
 
 void CFooDoc::drawSin(CDC* pDC, CRect rc)
 {
-	int acc = rc.Width();
+	int acc = rc.Width(); 
 	int height = rc.Height()/2;
 
 	CPen pen(PS_SOLID, 2, RGB(0, 0, 255)); 
 	CPen* pOldPen = pDC->SelectObject(&pen);
 
-	for (int x = 0; x < acc; ++x) 
+	for (int x = 0; x < acc; x++) 
 	{
-		double radians = (2 * PI * x) / acc; // период
-		int y = (height + height * -sin(radians)); 
+		double frequency = (2 * PI * x) / acc;
+		double amplitude = -sin(frequency); 
+		int y = (height + height * amplitude);  
 
 		if (x > 0) 
 		{
