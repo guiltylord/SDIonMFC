@@ -68,10 +68,20 @@ void CFooDoc::drawSin(CDC* pDC, CRect rc)
 		double amplitude = -sin(frequency); // амплитуда; 
 		int y = (height + height * amplitude);  
 
-		if (x > 0) 
+		if(x >= acc/2 && x % 10 == 0)
+		{
+			pDC->MoveTo(x, height);
 			pDC->LineTo(x, y);
+		}
+
+		if (x > 0) 
+		{
+			pDC->LineTo(x, y);
+		}
 		else 
+		{
 			pDC->MoveTo(x, y);
+		}
 	}
 
 	pDC->SelectObject(pOldPen);
