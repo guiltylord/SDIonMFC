@@ -63,8 +63,9 @@ void CFooDoc::drawSin(CDC* pDC, CRect rc)
 
 	for (int x = 0; x < acc; x++) 
 	{
-		double frequency = (2 * PI * x) / acc;
-		double amplitude = -sin(frequency); 
+		double phase = x + 0; //смещение
+		double frequency = (2 * PI * phase) / acc; //частота
+		double amplitude = -sin(frequency) * 2; // амплитуда; 
 		int y = (height + height * amplitude);  
 
 		if (x > 0) 
