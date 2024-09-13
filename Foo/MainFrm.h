@@ -32,12 +32,14 @@ public:
 protected:  // встроенные члены панели элементов управления
 	CToolBar          m_wndToolBar;
 	CStatusBar        m_wndStatusBar;
+	CSplitterWnd      m_wndSplitter;
 
 // Созданные функции схемы сообщений
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
 
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 };
 
 

@@ -4,6 +4,9 @@
 
 #pragma once
 
+//#include "FooDoc.h"
+
+class CFooDoc;
 
 class CFooView : public CView
 {

@@ -7,6 +7,7 @@
 #include "Foo.h"
 
 #include "MainFrm.h"
+#include "FooView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -94,3 +95,15 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // Обработчики сообщений CMainFrame
 
+
+
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
+{
+	// TODO: добавьте специализированный код или вызов базового класса
+	m_wndSplitter.CreateStatic(this, 1,2);
+
+	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CFooView), CSize(400, 0), pContext);
+	m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CFooView), CSize(0, 0), pContext);
+
+	return TRUE;
+}
