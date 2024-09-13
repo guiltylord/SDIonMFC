@@ -26,7 +26,7 @@ public:
 
 	cl data;
 
-	void drawMidLine(CRect rc, CDC pDC) {};
+	 static void drawMidLine(CRect rc, CDC *pDC) {};
 	void makePointsWithAccur(int accurancy, CPoint* lPoints) {};
 // Операции
 public:

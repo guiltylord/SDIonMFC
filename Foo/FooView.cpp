@@ -80,7 +80,7 @@ void CFooView::OnDraw(CDC* pDC)
 	int centerY = rc.Height() / 2; // вертикальный центр
 	int acc = rc.Width();
 
-	pDoc->drawMidLine(rc, &pDC);
+	pDoc->drawMidLine(rc, pDC);
 
 	CPoint* k = new CPoint[acc];
 	// Рисуем синусоиду

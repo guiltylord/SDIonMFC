@@ -50,11 +50,14 @@ BOOL CFooDoc::OnNewDocument()
 	return TRUE;
 }
 
-void drawMidLine(CRect rc, CDC pDC)
+void drawMidLine(CRect rc, CDC *pDC)
 {
+	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
+	CPen* oldPen = pDC->SelectObject(&pen);
+
 	int y = rc.Height() / 2;
-	pDC.MoveTo(0, y);
-	pDC.LineTo(rc.Width(), y);
+	pDC->MoveTo(0, y);
+	pDC->LineTo(rc.Width(), y);
 }
 
 
