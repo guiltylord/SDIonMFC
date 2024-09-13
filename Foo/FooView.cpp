@@ -65,9 +65,12 @@ void CFooView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+	CRect rc;
+	GetClientRect(&rc);
 	
-	pDoc->DrawSineWave(pDC);       // Рисуем синусоиду
-	pDoc->DrawHorizontalLine(pDC);
+	pDoc->drawSin(pDC, rc);
+	pDoc->drawLine(pDC, rc);
 }
 
 

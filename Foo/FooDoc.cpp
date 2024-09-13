@@ -18,6 +18,9 @@
 #define new DEBUG_NEW
 #endif
 
+
+const double PI = 3.141592653589793;
+
 // CFooDoc
 
 IMPLEMENT_DYNCREATE(CFooDoc, CDocument)
@@ -50,26 +53,25 @@ BOOL CFooDoc::OnNewDocument()
 	return TRUE;
 }
 
-void CFooDoc::DrawSineWave(CDC* pDC)
+void CFooDoc::drawSin(CDC* pDC, CRect rc)
 {
-	CRect rect;
-	pDC->GetClipBox(&rect);
+	int acc = rc.Width();
+	int height = rc.Height()/2;
 
-	const int width = rect.Width();
-	const int height = rect.Height();
-	const double pi = 3.14159265358979323846;
-
-	CPen pen(PS_SOLID, 2, RGB(0, 0, 255)); // Синий цвет
+	CPen pen(PS_SOLID, 2, RGB(0, 0, 255)); 
 	CPen* pOldPen = pDC->SelectObject(&pen);
 
-	for (int x = 0; x < width; ++x) {
-		double radians = (2 * pi * x) / width; // Один период
-		int y = ((height / 2) + (height / 4) * sin(radians)); // Центрируем и масштабируем
+	for (int x = 0; x < acc; ++x) 
+	{
+		double radians = (2 * PI * x) / acc; // период
+		int y = (height + height * -sin(radians)); 
 
-		if (x > 0) {
+		if (x > 0) 
+		{
 			pDC->LineTo(x, y);
 		}
-		else {
+		else 
+		{
 			pDC->MoveTo(x, y);
 		}
 	}
@@ -77,18 +79,16 @@ void CFooDoc::DrawSineWave(CDC* pDC)
 	pDC->SelectObject(pOldPen);
 }
 
-void CFooDoc::DrawHorizontalLine(CDC* pDC)
+void CFooDoc::drawLine(CDC* pDC, CRect rc)
 {
-	CRect rect;
-	pDC->GetClipBox(&rect);
 
-	int height = rect.Height();
+	int height = rc.Height();
 
 	CPen pen(PS_SOLID, 1, RGB(255, 0, 0)); // Красный цвет
 	CPen* pOldPen = pDC->SelectObject(&pen);
 
 	pDC->MoveTo(0, height / 2);
-	pDC->LineTo(rect.Width(), height / 2);
+	pDC->LineTo(rc.Width(), height / 2);
 
 	pDC->SelectObject(pOldPen);
 }

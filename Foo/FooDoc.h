@@ -26,8 +26,8 @@ public:
 
 	cl data;
 
-	void DrawSineWave(CDC* pDC);
-	void DrawHorizontalLine(CDC* pDC);
+	void drawSin(CDC* pDC, CRect rc);
+	void drawLine(CDC* pDC, CRect rc);
 // Операции
 public:
 // Переопределение
