@@ -65,12 +65,9 @@ void CFooView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-
-	CRect rc;
-	GetClientRect(&rc);
 	
-	pDoc->drawSin(pDC, rc);
-	pDoc->drawLine(pDC, rc);
+	drawSin();
+	drawLine();
 }
 
 
@@ -115,3 +112,60 @@ CFooDoc* CFooView::GetDocument() const // встроена неотлаженн�
 
 
 // Обработчики сообщений CFooView
+
+void CFooView::drawSin()
+{
+	CRect rc;
+	GetClientRect(&rc);
+
+	CDC* pDC = this->GetWindowDC();
+
+	CPen pen(PS_SOLID, 2, RGB(0, 0, 255));
+	CPen* pOldPen = pDC->SelectObject(&pen);
+
+	int acc = rc.Width();
+	int height = rc.Height() / 2;
+
+	for (int x = 0; x < acc; x++)
+	{
+		double phase = x + 0; //смещение
+		double frequency = (2 * PI * phase) / acc; //частота
+		double amplitude = -sin(frequency); // амплитуда; 
+		int y = (height + height * amplitude);
+
+		if (x >= acc / 2 && x % 10 == 0)
+		{
+			pDC->MoveTo(x, height);
+			pDC->LineTo(x, y);
+		}
+
+		if (x > 0)
+		{
+			pDC->LineTo(x, y);
+		}
+		else
+		{
+			pDC->MoveTo(x, y);
+		}
+	}
+
+	pDC->SelectObject(pOldPen);
+}
+
+void CFooView::drawLine()
+{
+	CRect rc;
+	GetClientRect(&rc);
+
+	CDC* pDC = this->GetWindowDC();
+
+	CPen pen(PS_SOLID, 1, RGB(255, 0, 0)); // Красный цвет
+	CPen* pOldPen = pDC->SelectObject(&pen);
+
+	int height = rc.Height();
+
+	pDC->MoveTo(0, height / 2);
+	pDC->LineTo(rc.Width(), height / 2);
+
+	pDC->SelectObject(pOldPen);
+}

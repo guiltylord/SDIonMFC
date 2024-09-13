@@ -15,6 +15,8 @@ protected: // создать только из сериализации
 public:
 	CFooDoc* GetDocument() const;
 
+	void drawSin();
+	void drawLine();
 // Операции
 public:
 

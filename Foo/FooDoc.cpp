@@ -53,53 +53,6 @@ BOOL CFooDoc::OnNewDocument()
 	return TRUE;
 }
 
-void CFooDoc::drawSin(CDC* pDC, CRect rc)
-{
-	int acc = rc.Width(); 
-	int height = rc.Height()/2;
-
-	CPen pen(PS_SOLID, 2, RGB(0, 0, 255)); 
-	CPen* pOldPen = pDC->SelectObject(&pen);
-
-	for (int x = 0; x < acc; x++) 
-	{
-		double phase = x + 0; //смещение
-		double frequency = (2 * PI * phase) / acc; //частота
-		double amplitude = -sin(frequency); // амплитуда; 
-		int y = (height + height * amplitude);  
-
-		if(x >= acc/2 && x % 10 == 0)
-		{
-			pDC->MoveTo(x, height);
-			pDC->LineTo(x, y);
-		}
-
-		if (x > 0) 
-		{
-			pDC->LineTo(x, y);
-		}
-		else 
-		{
-			pDC->MoveTo(x, y);
-		}
-	}
-
-	pDC->SelectObject(pOldPen);
-}
-
-void CFooDoc::drawLine(CDC* pDC, CRect rc)
-{
-
-	int height = rc.Height();
-
-	CPen pen(PS_SOLID, 1, RGB(255, 0, 0)); // Красный цвет
-	CPen* pOldPen = pDC->SelectObject(&pen);
-
-	pDC->MoveTo(0, height / 2);
-	pDC->LineTo(rc.Width(), height / 2);
-
-	pDC->SelectObject(pOldPen);
-}
 
 
 // Сериализация CFooDoc

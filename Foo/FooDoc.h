@@ -26,8 +26,6 @@ public:
 
 	cl data;
 
-	void drawSin(CDC* pDC, CRect rc);
-	void drawLine(CDC* pDC, CRect rc);
 // Операции
 public:
 // Переопределение
