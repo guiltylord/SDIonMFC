@@ -69,13 +69,9 @@ void CFooDoc::drawSin(CDC* pDC, CRect rc)
 		int y = (height + height * amplitude);  
 
 		if (x > 0) 
-		{
 			pDC->LineTo(x, y);
-		}
 		else 
-		{
 			pDC->MoveTo(x, y);
-		}
 	}
 
 	pDC->SelectObject(pOldPen);
