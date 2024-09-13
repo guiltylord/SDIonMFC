@@ -133,13 +133,15 @@ void CFooView::drawSin()
 		double frequency = (2 * PI * phase) / acc; //частота
 		double amplitude = -sin(frequency); // амплитуда; 
 		int y = (height + height * amplitude);
-
+		int a = x;
+		int b = y;
 		if (x >= acc / 2 && x % 10 == 0)
 		{
 
 			//CPen* pOldPen = pDC->SelectObject(&penYellow);
 			pDC->MoveTo(x, height);
 			pDC->LineTo(x, y);
+			pDC->MoveTo(a, b);
 		}
 
 		//CPen* pOldPen = pDC->SelectObject(&penBlue);
