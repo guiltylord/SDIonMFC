@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "CMyTreeview.h"
 class cl
 {
 public:
@@ -25,6 +26,8 @@ public:
 	int Px, Py, Pz;
 
 	cl data;
+
+	CMyTreeView* m_pTree;
 // Операции
 public:
 // Переопределение

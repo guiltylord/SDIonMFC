@@ -47,6 +47,8 @@ BOOL CFooDoc::OnNewDocument()
 	// (Документы SDI будут повторно использовать этот документ)
 	Px = 500;
 	Py = 500;
+	
+	m_pTree->FillTree();
 	return TRUE;
 }
 

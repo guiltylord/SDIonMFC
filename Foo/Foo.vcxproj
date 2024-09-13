@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CMyTreeview.h" />
     <ClInclude Include="Foo.h" />
     <ClInclude Include="FooDoc.h" />
     <ClInclude Include="FooView.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CMyTreeview.cpp" />
     <ClCompile Include="Foo.cpp" />
     <ClCompile Include="FooDoc.cpp" />
     <ClCompile Include="FooView.cpp" />
