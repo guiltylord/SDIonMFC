@@ -126,14 +126,16 @@ void CFooView::drawSin()
 
 	int acc = rc.Width();
 	int height = rc.Height() / 2;
+	int x0 = acc / 2;
+	int y0 = height;
 
 	for (int x = 0; x < acc; x++) 
 	{
 		double phase = x; // смещение
 		double frequency = (2 * PI * phase) / acc; // частота
-		double amplitude = -sin(frequency); // амплитуда
+		double amplitude = sin(frequency); // амплитуда
 		int y = (height + height * amplitude);
-
+		int currX = x;
 		if (x == 0) {
 			pDC->MoveTo(x, y); 
 		}
@@ -143,11 +145,16 @@ void CFooView::drawSin()
 			pDC->LineTo(x, y);
 		}
 
-		if (x % 20 == 0 && x > acc / 2) 
+		//auto sum{ [](int a, int b) {return a + b; } };
+		auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
+
+		if (x % 50 == 0 && x > acc / 2) 
 		{
-			pDC->SelectObject(&penYellow);
-			pDC->MoveTo(x, height); // перемещаемся на новую точку
-			pDC->LineTo(x, y); // рисуем линию
+			pDC->SelectObject(&penYellow);	
+			pDC->MoveTo(x, y); // +
+			pDC->LineTo(x+50, y+50); // рисуем линию
+
+			pDC->MoveTo(x, y); // +
 		}
 	}
 
