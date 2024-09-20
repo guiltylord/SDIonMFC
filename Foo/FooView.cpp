@@ -121,35 +121,38 @@ void CFooView::drawSin()
 	CDC* pDC = this->GetWindowDC();
 
 	CPen penBlue (PS_SOLID, 1, RGB(0, 0, 255));
-	CPen penYellow(PS_SOLID, 1, RGB(150, 50, 200));
+	CPen penYellow(PS_SOLID, 1, RGB(0, 180, 0));
 	CPen* pOldPen = pDC->SelectObject(&penBlue);
 
 	int acc = rc.Width();
 	int height = rc.Height() / 2;
 
-	for (int x = 0; x < acc; x++)
+	for (int x = 0; x < acc; x++) 
 	{
-		double phase = x + 0; //смещение
-		double frequency = (2 * PI * phase) / acc; //частота
-		double amplitude = -sin(frequency); // амплитуда; 
+		double phase = x; // смещение
+		double frequency = (2 * PI * phase) / acc; // частота
+		double amplitude = -sin(frequency); // амплитуда
 		int y = (height + height * amplitude);
 
-		if (x >= acc / 2 && x % 10 == 0)
+		if (x == 0) {
+			pDC->MoveTo(x, y); 
+		}
+		else 
 		{
-
-			//CPen* pOldPen = pDC->SelectObject(&penYellow);
-			pDC->MoveTo(x, height);
+			pDC->SelectObject(&penBlue);
 			pDC->LineTo(x, y);
 		}
 
-		//CPen* pOldPen = pDC->SelectObject(&penBlue);
-		if (x > 0) {
-			pDC->LineTo(x, y);
-		}
-		else {
-			pDC->MoveTo(x, y);
+		if (x % 20 == 0 && x > acc / 2) 
+		{
+			pDC->SelectObject(&penYellow);
+			pDC->MoveTo(x, height); // перемещаемся на новую точку
+			pDC->LineTo(x, y); // рисуем линию
 		}
 	}
+
+
+
 
 	pDC->SelectObject(pOldPen);
 }
