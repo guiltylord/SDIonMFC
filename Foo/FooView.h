@@ -18,8 +18,8 @@ public:
 	void drawSin();
 	void drawLine();
 	
-	double CFooView::f(double x, double m, double b, double width);
-	double CFooView::bisection(double a, double b, double m, double b_const, double width);
+	double CFooView::f(double x, double m, double b, double amplitude, double period);
+	double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period);
 // Операции
 public:
 
