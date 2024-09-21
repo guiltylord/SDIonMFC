@@ -148,18 +148,33 @@ void CFooView::drawSin()
 		//auto sum{ [](int a, int b) {return a + b; } };
 		auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
 
-		if (x % 50 == 0 && x > acc / 2) 
-		{
-			pDC->SelectObject(&penYellow);	
-			pDC->MoveTo(x, y); // +
-			pDC->LineTo(x+50, y+50); // рисуем линию
+		//if (x % 50 == 0 && x > acc / 2) 
+		//{
+		//	pDC->SelectObject(&penYellow);	
+		//	pDC->MoveTo(x, y); // +
+		//	pDC->LineTo(x+50, y+50); // рисуем линию
 
-			pDC->MoveTo(x, y); // +
-		}
+		//	pDC->MoveTo(x, y); // +
+		//}
+
+		
+
 	}
 
+	/*double mx = 2 * 3.14 / rc.Width();
+	double my = 2.f / rc.Height();*/
 
+	pDC->SelectObject(&penYellow);
 
+	for (int x = 0; x < rc.Width(); x++)
+	{
+		pDC->MoveTo(x, height);
+		if(x % 50 == 0 && x > rc.Width()/2)
+		{
+			int xz = x - (x0 - x);
+			pDC->LineTo(x + height*2, -rc.Height());
+		}
+	}
 
 	pDC->SelectObject(pOldPen);
 }
@@ -181,4 +196,37 @@ void CFooView::drawLine()
 	pDC->LineTo(rc.Width(), height / 2);
 
 	pDC->SelectObject(pOldPen);
+}
+
+
+// Метод бисекции
+double bisection(double a, double b, double m, double b_const) {
+	/*if (f(a, m, b_const) * f(b, m, b_const) >= 0)
+	{
+		std::cerr << "Неверный интервал: f(a) и f(b) должны иметь разные знаки." << std::endl;
+		return NAN;
+	}*/
+
+	double c;
+	while ((b - a) >= 1e-6) 
+	{
+		c = (a + b) / 2; // Средняя точка
+		if (f(c, m, b_const) == 0.0) 
+		{
+			break; // c является корнем
+		}
+		else if (f(c, m, b_const) * f(a, m, b_const) < 0) 
+		{
+			b = c; // Корень находится в левой части
+		}
+		else 
+		{
+			a = c; // Корень находится в правой части
+		}
+	}
+	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
+}
+
+double f(double x, double m, double b) {
+	return sin(x) - (m * x + b);
 }

@@ -14,9 +14,12 @@ protected: // создать только из сериализации
 // Атрибуты
 public:
 	CFooDoc* GetDocument() const;
-
+	
 	void drawSin();
 	void drawLine();
+	
+	double f(double x, double m, double b);
+	double bisection(double a, double b, double m, double b_const);
 // Операции
 public:
 
