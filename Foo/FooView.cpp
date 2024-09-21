@@ -124,15 +124,17 @@ void CFooView::drawSin()
 	CPen penYellow(PS_SOLID, 1, RGB(0, 180, 0));
 	CPen* pOldPen = pDC->SelectObject(&penBlue);
 
-	int acc = rc.Width();
+	int width = rc.Width();
 	int height = rc.Height() / 2;
-	int x0 = acc / 2;
+	int halfX = width / 2;
 	int y0 = height;
+	auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
 
-	for (int x = 0; x < acc; x++) 
+
+	for (int x = 0; x < width; x++) 
 	{
 		double phase = x; // смещение
-		double frequency = (2 * PI * phase) / acc; // частота
+		double frequency = (2 * PI * x) / width; // частота
 		double amplitude = sin(frequency); // амплитуда
 		int y = (height + height * amplitude);
 		int currX = x;
@@ -146,8 +148,7 @@ void CFooView::drawSin()
 		}
 
 		//auto sum{ [](int a, int b) {return a + b; } };
-		auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
-
+		
 		//if (x % 50 == 0 && x > acc / 2) 
 		//{
 		//	pDC->SelectObject(&penYellow);	
@@ -168,11 +169,22 @@ void CFooView::drawSin()
 
 	for (int x = 0; x < rc.Width(); x++)
 	{
+		
+
 		pDC->MoveTo(x, height);
 		if(x % 50 == 0 && x > rc.Width()/2)
 		{
-			int xz = x - (x0 - x);
-			pDC->LineTo(x + height*2, -rc.Height());
+			double m = 1.0; // Угол наклона 
+			double b = -x; // Смещение 
+			double a = -halfX; // Начало интервала + 
+			double b_val = halfX; // Конец интервала +
+			double ix = abs(bisection(a, b_val, 1, b));
+			double root = ix;
+
+			double frequency = (2 * PI * root) / width; // частота
+			int xz = x - (1 - x);
+			double lol = sin(halfX/root);
+			pDC->LineTo(root, lol);
 		}
 	}
 
@@ -199,8 +211,13 @@ void CFooView::drawLine()
 }
 
 
+
+double CFooView::f(double x, double m, double b) {
+	return sin(x) - (m * x + b);
+}
+
 // Метод бисекции
-double bisection(double a, double b, double m, double b_const) {
+double CFooView::bisection(double a, double b, double m, double b_const) {
 	/*if (f(a, m, b_const) * f(b, m, b_const) >= 0)
 	{
 		std::cerr << "Неверный интервал: f(a) и f(b) должны иметь разные знаки." << std::endl;
@@ -225,8 +242,4 @@ double bisection(double a, double b, double m, double b_const) {
 		}
 	}
 	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
-}
-
-double f(double x, double m, double b) {
-	return sin(x) - (m * x + b);
 }
