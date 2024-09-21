@@ -126,6 +126,7 @@ void CFooView::drawSin()
 
 	int width = rc.Width();
 	int height = rc.Height() / 2;
+	int k = rc.Height();
 	int halfX = width / 2;
 	int y0 = height;
 	auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
@@ -167,27 +168,28 @@ void CFooView::drawSin()
 
 	pDC->SelectObject(&penYellow);
 
-	for (int x = 0; x < rc.Width(); x++)
-	{
-		
+	//for (int x = 0; x < rc.Width(); x++)
+	//{
+	//	
 
-		pDC->MoveTo(x, height);
-		if(x % 50 == 0 && x > rc.Width()/2)
-		{
-			double m = 1.0; // Угол наклона 
-			double b = -x; // Смещение 
-			double a = -halfX; // Начало интервала + 
-			double b_val = halfX; // Конец интервала +
-			double ix = abs(bisection(a, b_val, 1, b));
-			double root = ix;
+	//	pDC->MoveTo(x, height);
+	//	if(x % 50 == 0 && x > rc.Width()/2)
+	//	{
+	//		double m = 1.0; // Угол наклона 
+	//		double b = -x; // Смещение 
+	//		double a = -halfX; // Начало интервала + 
+	//		double b_val = halfX; // Конец интервала +
+	//		double ix = abs(bisection(a, b_val, 1, b, width));
+	//		double root = ix;
 
-			double frequency = (2 * PI * root) / width; // частота
-			int xz = x - (1 - x);
-			double lol = sin(halfX/root);
-			pDC->LineTo(root, lol);
-		}
-	}
-
+	//		double frequency = (2 * PI * root) / width; // частота
+	//		int xz = x - (1 - x);
+	//		double lol = sin(halfX/root);
+	//		pDC->LineTo(root, lol);
+	//	}
+	//}
+	pDC->MoveTo(709, 309);
+	pDC->LineTo(709, 618);
 	pDC->SelectObject(pOldPen);
 }
 
@@ -212,12 +214,16 @@ void CFooView::drawLine()
 
 
 
-double CFooView::f(double x, double m, double b) {
-	return sin(x) - (m * x + b);
+double CFooView::f(double x, double m, double b, double width) {
+	double frequency = (2 * PI * x) / width; // Частота
+	double amplitude = sin(frequency); // Амплитуда
+	return amplitude - (m * x + b); // Разность между амплитудой и уравнением прямой
 }
 
+
+
 // Метод бисекции
-double CFooView::bisection(double a, double b, double m, double b_const) {
+double CFooView::bisection(double a, double b, double m, double b_const, double width) {
 	/*if (f(a, m, b_const) * f(b, m, b_const) >= 0)
 	{
 		std::cerr << "Неверный интервал: f(a) и f(b) должны иметь разные знаки." << std::endl;
@@ -228,11 +234,11 @@ double CFooView::bisection(double a, double b, double m, double b_const) {
 	while ((b - a) >= 1e-6) 
 	{
 		c = (a + b) / 2; // Средняя точка
-		if (f(c, m, b_const) == 0.0) 
+		if (f(c, m, b_const, width) == 0.0)
 		{
 			break; // c является корнем
 		}
-		else if (f(c, m, b_const) * f(a, m, b_const) < 0) 
+		else if (f(c, m, b_const, width) * f(a, m, b_const, width) < 0)
 		{
 			b = c; // Корень находится в левой части
 		}
