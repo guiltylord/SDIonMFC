@@ -6,6 +6,7 @@
 #include "framework.h"
 #include <cmath>
 #include <vector>
+#include <set>
 // SHARED_HANDLERS можно определить в обработчиках фильтров просмотра реализации проекта ATL, эскизов
 // и поиска; позволяет совместно использовать код документа в данным проекте.
 #ifndef SHARED_HANDLERS
@@ -159,25 +160,40 @@ void CFooView::drawSin()
 		pDC->MoveTo(x, halfY);
 		if(x % step == 0 && x > rc.Width()/2)
 		{
-
-			double frequency = (2 * PI * x) / width; // частота
-			double amp = sin(frequency); // амплитуда
-
 			double b = x - halfX; // Смещение прямой
+			int a = -(halfY-halfX); // Начало интервала
 
-			double a = -1000.0; // Начало интервала
-			double b_val = 1000.0; // Конец интервала
+			std::vector<double> res = findIntersections(halfY, halfX, b, a, halfX, 10); //+
+
+			// Множество для хранения уникальных значений
+			std::set<int> uniq(res.begin(), res.end());
+
+			auto it = uniq.begin();
 
 
-			std::vector<double> intersections = findIntersections(amp, halfX, b, 0, halfX, step);
+			if(res.size() == 1)
+			{
+				double root = *it;
+				advance(it, 0);
+				double y = halfY * sin(PI / halfX * root);
+				double Y = height - halfY - y;
+				double X = halfX + root;
+				pDC->LineTo(X, Y);
+			}
+			if (res.size() == 2)
+			{
+				advance(it, 0);
+				double root = *it;
+				double y = halfY * sin(PI / halfX * root);
+				double Y = height - halfY - y;
+				pDC->MoveTo(root, Y);
 
-
-			//double root = bisection(a, b_val, 1, b, halfY, halfX);
-			//double y = halfY * sin(PI / halfX * root);
-			
-			double Y = height - halfY - y;
-			double X = halfX + root;
-			pDC->LineTo(X, Y);
+				advance(it, 1);
+				root = *it;
+				y = halfY * sin(PI / halfX * root);
+				Y = height - halfY - y;
+				pDC->LineTo(root, Y);
+			}
 		}
 	}
 
@@ -219,34 +235,34 @@ double CFooView::sineWave(double x, double A, double period) {
 	return A * sin(PI / period * x);
 }
 
-
-// Метод бисекции
-double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period) {
-	/*if (f(a, m, b_const) * f(b, m, b_const) >= 0)
-	{
-		std::cerr << "Неверный интервал: f(a) и f(b) должны иметь разные знаки." << std::endl;
-		return NAN;
-	}*/
-
-	double c;
-	while ((b - a) >= 1e-6) 
-	{
-		c = (a + b) / 2; // Средняя точка
-		if (sineWave(c, m, b_const, amplitude, period) == 0.0)
-		{
-			break; // c является корнем
-		}
-		else if (sineWave(c, m, b_const, amplitude, period) * sineWave(a, m, b_const, amplitude, period) < 0)
-		{
-			b = c; // Корень находится в левой части
-		}
-		else 
-		{
-			a = c; // Корень находится в правой части
-		}
-	}
-	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
-}
+//
+//// Метод бисекции
+//double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period) {
+//	/*if (f(a, m, b_const) * f(b, m, b_const) >= 0)
+//	{
+//		std::cerr << "Неверный интервал: f(a) и f(b) должны иметь разные знаки." << std::endl;
+//		return NAN;
+//	}*/
+//
+//	double c;
+//	while ((b - a) >= 1e-6) 
+//	{
+//		c = (a + b) / 2; // Средняя точка
+//		if (sineWave(c, m, b_const, amplitude, period) == 0.0)
+//		{
+//			break; // c является корнем
+//		}
+//		else if (sineWave(c, m, b_const, amplitude, period) * sineWave(a, m, b_const, amplitude, period) < 0)
+//		{
+//			b = c; // Корень находится в левой части
+//		}
+//		else 
+//		{
+//			a = c; // Корень находится в правой части
+//		}
+//	}
+//	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
+//}
 
 int CFooView::customRound(double num)
 {
@@ -263,8 +279,8 @@ std::vector<double> CFooView::findIntersections(double A, double T, double b, do
 		double yLine = x + b;
 
 		// Проверяем на пересечение
-		if (std::abs(ySine - yLine) < 1e-5) { // Погрешность
-			intersections.push_back(x);
+		if (std::abs(ySine - yLine) < step) { // Погрешность
+			intersections.push_back(abs(x));
 		}
 	}
 
