@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <vector>
 
 class CFooView : public CView
 {
@@ -17,9 +18,13 @@ public:
 	
 	void drawSin();
 	void drawLine();
+
 	
-	double CFooView::f(double x, double m, double b, double amplitude, double period);
+	double CFooView::sineWave(double x, double A, double period);
 	double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period);
+
+	int CFooView::customRound(double num);
+	std::vector<double> CFooView::findIntersections(double A, double T, double b, double startX, double endX, double step);
 // Операции
 public:
 

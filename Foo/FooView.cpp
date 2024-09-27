@@ -159,13 +159,21 @@ void CFooView::drawSin()
 		pDC->MoveTo(x, halfY);
 		if(x % step == 0 && x > rc.Width()/2)
 		{
+
+			double frequency = (2 * PI * x) / width; // частота
+			double amp = sin(frequency); // амплитуда
+
 			double b = x - halfX; // Смещение прямой
 
 			double a = -1000.0; // Начало интервала
 			double b_val = 1000.0; // Конец интервала
 
-			double root = bisection(a, b_val, 1, b, halfY, halfX);
-			double y = halfY * sin(PI / halfX * root);
+
+			std::vector<double> intersections = findIntersections(amp, halfX, b, 0, halfX, step);
+
+
+			//double root = bisection(a, b_val, 1, b, halfY, halfX);
+			//double y = halfY * sin(PI / halfX * root);
 			
 			double Y = height - halfY - y;
 			double X = halfX + root;
@@ -174,14 +182,14 @@ void CFooView::drawSin()
 	}
 
 	pDC->SelectObject(&penIs);
-	for (int x = halfX; x < rc.Width(); x++)
+	/*for (int x = halfX; x < rc.Width(); x++)
 	{
 		pDC->MoveTo(x, halfY);
 		if (x % step == 0 && x >= rc.Width() / 2)
 		{
 			pDC->LineTo(x, -height);
 		}
-	}
+	}*/
 
 	pDC->SelectObject(pOldPen);
 }
@@ -207,9 +215,8 @@ void CFooView::drawLine()
 
 
 
-double CFooView::f(double x, double m, double b, double amplitude, double period) {
-	double frequency = PI / period * x; // Частота
-	return amplitude * sin(frequency) - (1 * x + b); // Разность между синусом и уравнением прямой
+double CFooView::sineWave(double x, double A, double period) {
+	return A * sin(PI / period * x);
 }
 
 
@@ -225,11 +232,11 @@ double CFooView::bisection(double a, double b, double m, double b_const, double 
 	while ((b - a) >= 1e-6) 
 	{
 		c = (a + b) / 2; // Средняя точка
-		if (f(c, m, b_const, amplitude, period) == 0.0)
+		if (sineWave(c, m, b_const, amplitude, period) == 0.0)
 		{
 			break; // c является корнем
 		}
-		else if (f(c, m, b_const, amplitude, period) * f(a, m, b_const, amplitude, period) < 0)
+		else if (sineWave(c, m, b_const, amplitude, period) * sineWave(a, m, b_const, amplitude, period) < 0)
 		{
 			b = c; // Корень находится в левой части
 		}
@@ -239,4 +246,27 @@ double CFooView::bisection(double a, double b, double m, double b_const, double 
 		}
 	}
 	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
+}
+
+int CFooView::customRound(double num)
+{
+	double fractionalPart = num - std::floor(num);
+	return (fractionalPart >= 0.5) ? std::ceil(num) : std::floor(num);
+}
+
+std::vector<double> CFooView::findIntersections(double A, double T, double b, double startX, double endX, double step)
+{
+	std::vector<double> intersections;
+
+	for (double x = startX; x <= endX; x += step) {
+		double ySine = sineWave(x, A, T);
+		double yLine = x + b;
+
+		// Проверяем на пересечение
+		if (std::abs(ySine - yLine) < 1e-5) { // Погрешность
+			intersections.push_back(x);
+		}
+	}
+
+	return intersections;
 }
