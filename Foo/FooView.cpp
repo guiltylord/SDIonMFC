@@ -145,11 +145,12 @@ void CFooView::drawSin()
 		}
 		else
 		{
-			pDC->SelectObject(&penBlue);
+			pDC->SelectObject(&penYellow);
 			pDC->LineTo(x, y);
 		}
 	}
 
+	pDC->SelectObject(&penBlue);
 	pDC->MoveTo(0, height / 2);
 	for (float i = 0; i < PI; i += stepShtrih)
 	{
