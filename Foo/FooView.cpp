@@ -133,6 +133,23 @@ void CFooView::drawSin()
 	float ky = height / 2;
 	float stepShtrih = 50 * step;
 
+	for (int x = 0; x < width; x++)
+	{
+		double phase = x; // смещение
+		double frequency = (2 * PI * x) / width; // частота
+		double amplitude = sin(frequency); // амплитуда
+		int y = (height/2 + height / 2 * amplitude);
+		int currX = x;
+		if (x == 0) {
+			pDC->MoveTo(x, y);
+		}
+		else
+		{
+			pDC->SelectObject(&penBlue);
+			pDC->LineTo(x, y);
+		}
+	}
+
 	pDC->MoveTo(0, height / 2);
 	for (float i = 0; i < PI; i += stepShtrih)
 	{
