@@ -54,7 +54,7 @@ BOOL CFooDoc::OnNewDocument()
 
 	m_pTree->m_pDoc = this;
 	m_pTree->FillTree();
-
+	m_bHatch45 = m_bCoord = m_bSinus = m_bHatch = m_bBrush = false;
 	return TRUE;
 }
 

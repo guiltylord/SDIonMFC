@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "Foo.h"
 #include "CMyTreeview.h"
+#include "Fooview.h"
 #include "FooDoc.h"
 
 
@@ -118,5 +119,5 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_pDoc->m_bSinus = tree.GetCheck(m_hSinus);
 	m_pDoc->m_bHatch = tree.GetCheck(m_hHatch);
 
-	//m_pDoc->m_pView->Invalidate();
+	m_pDoc->m_pView->Invalidate();
 }

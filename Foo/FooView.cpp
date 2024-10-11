@@ -60,13 +60,34 @@ void CFooView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	
-	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
-	CPen * oldPen = pDC->SelectObject(&pen);
-	
+
 	CRect rc;
 	GetClientRect(&rc);
+	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
+	CPen * oldPen = pDC->SelectObject(&pen);
 
+	double mx = 2 * 3.14 / rc.Width();
+	double my = 2.f / rc.Height();
+	if (pDoc->m_bSinus)
+	{
+		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+
+		//pOld = pDC->SelectObject(&pen);
+
+		//pDC->MoveTo(0, rc.Height() / 2);
+
+
+		for (int x = 0; x < rc.Width(); x++)
+		{
+			double X_rad = x * mx;
+			int y = rc.Height() / 2 + sin(X_rad) / my;
+
+			pDC->LineTo(x, y);
+		}
+		//pDC->SelectObject(pOld);
+
+
+	}
 	// TODO: добавьте здесь код отрисовки для собственных данных
 
 	pDC->LineTo(rc.Width() / 2, rc.Height() / 2);
