@@ -24,7 +24,7 @@ public:
 	double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period);
 
 	int CFooView::customRound(double num);
-	std::vector<double> CFooView::findIntersections(double A, double T, double b, double startX, double endX, double step);
+	double CFooView::findIntersections(double A, double T, double b, double startX, double endX, double step);
 // Операции
 public:
 

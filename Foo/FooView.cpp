@@ -126,76 +126,72 @@ void CFooView::drawSin()
 	CPen penIs(PS_SOLID, 1, RGB(204, 0, 204));
 	CPen* pOldPen = pDC->SelectObject(&penBlue);
 
-	int width = rc.Width();
-	int height = rc.Height();
+	float height = rc.Height();
+	float width = rc.Width();
+	float step = PI / width;
+	float kx = width / (2 * PI);
+	float ky = height / 2;
+	float stepShtrih = 50 * step;
 
-	int halfY = height / 2;
-	int halfX = width / 2;
-	
-	auto sinus{ [](double x, double acc) { return  sin((2 * PI * x) / acc); } };
-
-
-	for (int x = 0; x < width; x++) 
+	pDC->MoveTo(0, height / 2);
+	for (float i = 0; i < PI; i += stepShtrih)
 	{
-		double phase = x; // смещение
-		double frequency = (2 * PI * x) / width; // частота
-		double amplitude = sin(frequency); // амплитуда
-		int y = (halfY + halfY * amplitude);
-		int currX = x;
-		if (x == 0) {
-			pDC->MoveTo(x, y); 
-		}
-		else 
-		{
-			pDC->SelectObject(&penBlue);
-			pDC->LineTo(x, y);
-		}
+		pDC->MoveTo(i * kx, height / 2);
+		pDC->LineTo(i * kx, sin(i) * ky + height / 2);
 	}
+
+	pDC->MoveTo(width / 2, height / 2);
+	for (float i = PI; i < 2 * PI; i += stepShtrih)
+	{
+		pDC->MoveTo(i * kx, height / 2);
+		float tmpX = findIntersections(-i + PI,1,1,1,1,1) + PI;
+		pDC->LineTo(tmpX * kx, sin(tmpX) * ky + height / 2);
+	}
+
 
 	pDC->SelectObject(&penYellow);
 
-	int step = 10;
-	for (int x = halfX; x < rc.Width(); x++)
-	{
-		pDC->MoveTo(x, halfY);
-		if(x % step == 0 && x > rc.Width()/2)
-		{
-			double b = x - halfX; // Смещение прямой
-			int a = -(halfY-halfX); // Начало интервала
+	//for (int x = halfX; x < rc.Width(); x++)
+	//{
+	//	pDC->MoveTo(x, halfY);
+	//	if(x % step == 0 && x > rc.Width()/2)
+	//	{
+	//		double b = x - halfX; // Смещение прямой
+	//		int a = -(halfY-halfX); // Начало интервала
 
-			std::vector<double> res = findIntersections(halfY, halfX, b, a, halfX, 10); //+
+	//		std::vector<double> res = findIntersections(halfY, halfX, b, a, halfX, 10); //+
 
-			// Множество для хранения уникальных значений
-			std::set<int> uniq(res.begin(), res.end());
+	//		// Множество для хранения уникальных значений
+	//		std::set<int> uniq(res.begin(), res.end());
 
-			auto it = uniq.begin();
+	//		auto it = uniq.begin();
 
 
-			if(res.size() == 1)
-			{
-				double root = *it;
-				advance(it, 0);
-				double y = halfY * sin(PI / halfX * root);
-				double Y = height - halfY - y;
-				double X = halfX + root;
-				pDC->LineTo(X, Y);
-			}
-			if (res.size() == 2)
-			{
-				advance(it, 0);
-				double root = *it;
-				double y = halfY * sin(PI / halfX * root);
-				double Y = height - halfY - y;
-				pDC->MoveTo(root, Y);
+	//		if(res.size() == 1)
+	//		{
+	//			double root = *it;
+	//			advance(it, 0);
+	//			double y = halfY * sin(PI / halfX * root);
+	//			double Y = height - halfY - y;
+	//			double X = halfX + root;
+	//			pDC->LineTo(X, Y);
+	//		}
+	//		if (res.size() == 2)
+	//		{
+	//			advance(it, 0);
+	//			double root = *it;
+	//			double y = halfY * sin(PI / halfX * root);
+	//			double Y = height - halfY - y;
+	//			pDC->MoveTo(root, Y);
 
-				advance(it, 1);
-				root = *it;
-				y = halfY * sin(PI / halfX * root);
-				Y = height - halfY - y;
-				pDC->LineTo(root, Y);
-			}
-		}
-	}
+	//			advance(it, 1);
+	//			root = *it;
+	//			y = halfY * sin(PI / halfX * root);
+	//			Y = height - halfY - y;
+	//			pDC->LineTo(root, Y);
+	//		}
+	//	}
+	//}
 
 	pDC->SelectObject(&penIs);
 	/*for (int x = halfX; x < rc.Width(); x++)
@@ -232,7 +228,7 @@ void CFooView::drawLine()
 
 
 double CFooView::sineWave(double x, double A, double period) {
-	return A * sin(PI / period * x);
+	return x - sin(x) + A;
 }
 
 //
@@ -266,23 +262,25 @@ double CFooView::sineWave(double x, double A, double period) {
 
 int CFooView::customRound(double num)
 {
-	double fractionalPart = num - std::floor(num);
-	return (fractionalPart >= 0.5) ? std::ceil(num) : std::floor(num);
+	return 1;
 }
 
-std::vector<double> CFooView::findIntersections(double A, double T, double b, double startX, double endX, double step)
+double CFooView::findIntersections(double A, double T, double rt5r, double startX, double endX, double step)
 {
-	std::vector<double> intersections;
-
-	for (double x = startX; x <= endX; x += step) {
-		double ySine = sineWave(x, A, T);
-		double yLine = x + b;
-
-		// Проверяем на пересечение
-		if (std::abs(ySine - yLine) < step) { // Погрешность
-			intersections.push_back(abs(x));
+	float a = 0, b = PI;
+	const float eps = 0.0001;
+	float c = (a + b) / 2;
+	while (abs(b - a) > eps)
+	{
+		if (sineWave(a, A, 1) * sineWave(c, A, 1) < 0)
+		{
+			b = c;
 		}
+		else
+		{
+			a = c;
+		}
+		c = (a + b) / 2;
 	}
-
-	return intersections;
+	return c;
 }
