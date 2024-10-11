@@ -114,6 +114,10 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	CFooDoc* pDoc = (CFooDoc*)GetActiveDocument();
 
 	pDoc->m_pTree = (CMyTreeView*)m_wndSplitter.GetPane(0, 0);
+
+
+	pDoc->m_pTree->m_pDoc = pDoc;
+
 	//todo
 	return TRUE;
 }

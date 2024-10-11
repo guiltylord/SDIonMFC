@@ -8,6 +8,8 @@
 // и поиска; позволяет совместно использовать код документа в данным проекте.
 #ifndef SHARED_HANDLERS
 #include "Foo.h"
+
+#include"MainFrm.h"
 #endif
 
 #include "FooDoc.h"
@@ -47,8 +49,12 @@ BOOL CFooDoc::OnNewDocument()
 	// (Документы SDI будут повторно использовать этот документ)
 	Px = 500;
 	Py = 500;
-	
+
+	CWnd* MainWnd = AfxGetMainWnd();
+
+	m_pTree->m_pDoc = this;
 	m_pTree->FillTree();
+
 	return TRUE;
 }
 

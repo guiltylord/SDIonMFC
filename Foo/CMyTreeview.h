@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <afxcview.h>
-
+class CFooDoc;
 // Просмотр CMyTreeview
 
 class CMyTreeView : public CTreeView
@@ -13,7 +13,10 @@ protected:
 	virtual ~CMyTreeView();
 
 public:
-	HTREEITEM m_hCoord, m_hSinus, m_hHatch;
+
+	CFooDoc* m_pDoc;
+
+	HTREEITEM m_hMain, m_hCoord, m_hSinus, m_hHatch;
 
 	void FillTree();
 
@@ -28,6 +31,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 
