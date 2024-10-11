@@ -161,8 +161,8 @@ void CFooView::drawSin()
 		{
 			double b = x - halfX; // Смещение прямой
 
-			double a = -1000.0; // Начало интервала
-			double b_val = 1000.0; // Конец интервала
+			double a = -width; // Начало интервала
+			double b_val = width; // Конец интервала
 
 			double root = bisection(a, b_val, 1, b, halfY, halfX);
 			double y = halfY * sin(PI / halfX * root);
