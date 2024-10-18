@@ -174,6 +174,21 @@ void CFooView::drawSin()
 			pDC->LineTo(X, Y);
 		}
 	}
+
+	
+
+	for (int x = 0; x < rc.Width(); x++)
+	{
+			double X = x * frequency;
+			double amplitude = sin(X); 
+		int y = (height + height * amplitude);
+		if (x % 20 == 0)
+		{
+			pDC->MoveTo(x, y);
+			pDC->LineTo(x, rc.Height() / 2);
+
+		}
+	}
 	
 	/*pDC->SelectObject(&penDent);
 	for (int x = halfX; x < rc.Width(); x++)
