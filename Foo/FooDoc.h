@@ -7,6 +7,8 @@
 
 #include "CMyTreeview.h"
 
+#include "CLineDlg.h"
+
 class CFooView;
 class cl
 {
@@ -34,6 +36,8 @@ public:
 	CMyTreeView* m_pTree;
 
 	CFooView* m_pView;
+
+	CLineDlg m_setupDlg;
 // Операции
 public:
 // Переопределение
@@ -63,4 +67,7 @@ protected:
 	// Вспомогательная функция, задающая содержимое поиска для обработчика поиска
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	afx_msg void OnMymenuSetup();
+	afx_msg void OnMymenuSetupNotmodal();
 };

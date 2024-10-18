@@ -13,6 +13,7 @@
 #endif
 
 #include "FooDoc.h"
+#include "CLineDlg.h"
 
 #include <propkey.h>
 
@@ -25,6 +26,8 @@
 IMPLEMENT_DYNCREATE(CFooDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
+	ON_COMMAND(MYMENU_SETUP, &CFooDoc::OnMymenuSetup)
+	ON_COMMAND(MYMENU_SETUP_NOTMODAL, &CFooDoc::OnMymenuSetupNotmodal)
 END_MESSAGE_MAP()
 
 
@@ -159,3 +162,33 @@ void CFooDoc::Dump(CDumpContext& dc) const
 
 
 // Команды CFooDoc
+
+
+void CFooDoc::OnMymenuSetup()
+{
+	// TODO: добавьте свой код обработчика команд
+	CLineDlg dlg;
+	dlg.flag = m_bHatch;
+
+	if (dlg.DoModal() == IDOK)
+	{
+		m_bHatch = dlg.flag;
+		
+		UpdateAllViews(NULL);
+	}
+}
+
+
+void CFooDoc::OnMymenuSetupNotmodal()
+{
+	// TODO: добавьте свой код обработчика команд
+
+	if(!m_setupDlg)
+		m_setupDlg.Create(IDD_DIALOG1);
+
+	m_setupDlg.flag = m_bHatch;
+
+	m_setupDlg.m_pDoc = this;
+
+	m_setupDlg.ShowWindow(SW_SHOW);
+}
