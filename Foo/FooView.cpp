@@ -78,18 +78,29 @@ void CFooView::OnDraw(CDC* pDC)
 	{
 		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
 
-		//pOld = pDC->SelectObject(&pen);
-		//pDC->MoveTo(0, rc.Height() / 2);
-
-		for (int x = 0; x < rc.Width(); ++x)
+		for (int x = 0; x < rc.Width(); x++)
 		{
-			double X = x * frequency;
-			int y = rc.Height() / 2 + sin(X) / my;
+			double phase = x; // смещение
+			double frequency = (2 * PI * phase) / rc.Width(); // частота
+			double amplitude = -sin(frequency); // амплитуда
+			int y = (height + height * amplitude);
 
-			//int y = (height + height * sin(X));
-			pDC->LineTo(x, y);
+			if (x == 0) {
+				pDC->MoveTo(x, y);
+			}
+			else
+			{
+				pDC->SelectObject(&pen);
+				pDC->LineTo(x, y);
+			}
+
+			//if (x % 20 == 0 && x > acc / 2)
+			//{
+			//	pDC->SelectObject(&penYellow);
+			//	pDC->MoveTo(x, height); // перемещаемся на новую точку
+			//	pDC->LineTo(x, y); // рисуем линию
+			//}
 		}
-		//pDC->SelectObject(pOld);
 	}
 
 	if (pDoc->m_bCoord)
