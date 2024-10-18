@@ -130,8 +130,8 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_pDoc->m_bCoord = tree.GetCheck(m_hCoord);
 	m_pDoc->m_bSinus = tree.GetCheck(m_hSinus);
 	m_pDoc->m_bHatch = tree.GetCheck(m_hHatch);
-	m_pDoc->m_bHatch = tree.GetCheck(m_hStreaks45);
-	m_pDoc->m_bHatch = tree.GetCheck(m_hBrush);
+	m_pDoc->m_bHatch45 = tree.GetCheck(m_hStreaks45);
+	m_pDoc->m_bBrush = tree.GetCheck(m_hBrush);
 
 	m_pDoc->m_pView->Invalidate();
 }
