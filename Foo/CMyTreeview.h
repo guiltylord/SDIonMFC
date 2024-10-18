@@ -16,7 +16,7 @@ public:
 
 	CFooDoc* m_pDoc;
 
-	HTREEITEM m_hMain, m_hCoord, m_hSinus, m_hHatch;
+	HTREEITEM m_hMain, m_hCoord, m_hSinus, m_hHatch, m_hStreaks45, m_hBrush;
 
 	void FillTree();
 

@@ -66,28 +66,72 @@ void CFooView::OnDraw(CDC* pDC)
 	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
 	CPen * oldPen = pDC->SelectObject(&pen);
 
-	double mx = 2 * 3.14 / rc.Width();
+	double frequency = 2 * 3.14 / rc.Width();
+
+
+	int height = rc.Height() / 2;
+
+
 	double my = 2.f / rc.Height();
+
 	if (pDoc->m_bSinus)
 	{
 		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
 
 		//pOld = pDC->SelectObject(&pen);
-
 		//pDC->MoveTo(0, rc.Height() / 2);
 
-
-		for (int x = 0; x < rc.Width(); x++)
+		for (int x = 0; x < rc.Width(); ++x)
 		{
-			double X_rad = x * mx;
-			int y = rc.Height() / 2 + sin(X_rad) / my;
+			double X = x * frequency;
+			int y = rc.Height() / 2 + sin(X) / my;
 
+			//int y = (height + height * sin(X));
 			pDC->LineTo(x, y);
 		}
 		//pDC->SelectObject(pOld);
+	}
 
+	if (pDoc->m_bCoord)
+	{
+		pDC->MoveTo(0, rc.Height() / 2);
+		pDC->LineTo(rc.Width(), rc.Height() / 2);
+
+		pDC->MoveTo(0, rc.Height() / 2);
+	}
+
+	if (pDoc->m_bHatch)
+	{
+
+		for (int x = 0; x < rc.Width(); x++)
+		{
+			double X_rad = x * frequency;
+			int y = rc.Height() / 2 + sin(X_rad);// / my;
+			/*CPen pen(PS_SOLID, 1, RGB(0, 255, 0));
+
+			pOld = pDC->SelectObject(&pen);*/
+			if (x % 20 == 0)
+			{
+				pDC->MoveTo(x, y);
+				pDC->LineTo(x, rc.Height() / 2);
+
+			}
+			//pDC->LineTo(x, y);
+			//pDC->SelectObject(pOld);
+		}
 
 	}
+
+	if (pDoc->m_bHatch45)
+	{
+	}
+
+	if (pDoc->m_bBrush)
+	{
+	}
+
+
+
 	// TODO: добавьте здесь код отрисовки для собственных данных
 
 	pDC->LineTo(rc.Width() / 2, rc.Height() / 2);
