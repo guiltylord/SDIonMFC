@@ -64,12 +64,18 @@ void CFooView::OnDraw(CDC* pDC)
 	CRect rc;
 	GetClientRect(&rc);
 	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
+
+	CPen penBlue(PS_SOLID, 1, RGB(0, 0, 255));
+	CPen penYellow(PS_SOLID, 1, RGB(150, 50, 200));
 	CPen * oldPen = pDC->SelectObject(&pen);
 
 	double frequency = 2 * 3.14 / rc.Width();
 
 
-	int height = rc.Height() / 2;
+	int height = rc.Height();
+	int halfY = height/2;
+	int width = rc.Width();
+	int halfX = width/2;
 
 
 	double my = 2.f / rc.Height();
@@ -83,7 +89,7 @@ void CFooView::OnDraw(CDC* pDC)
 			double phase = x; // смещение
 			double frequency = (2 * PI * phase) / rc.Width(); // частота
 			double amplitude = -sin(frequency); // амплитуда
-			int y = (height + height * amplitude);
+			int y = (halfY + halfY * amplitude);
 
 			if (x == 0) {
 				pDC->MoveTo(x, y);
@@ -93,13 +99,6 @@ void CFooView::OnDraw(CDC* pDC)
 				pDC->SelectObject(&pen);
 				pDC->LineTo(x, y);
 			}
-
-			//if (x % 20 == 0 && x > acc / 2)
-			//{
-			//	pDC->SelectObject(&penYellow);
-			//	pDC->MoveTo(x, height); // перемещаемся на новую точку
-			//	pDC->LineTo(x, y); // рисуем линию
-			//}
 		}
 	}
 
@@ -107,28 +106,28 @@ void CFooView::OnDraw(CDC* pDC)
 	{
 		pDC->MoveTo(0, rc.Height() / 2);
 		pDC->LineTo(rc.Width(), rc.Height() / 2);
-
+		
 		pDC->MoveTo(0, rc.Height() / 2);
 	}
 
 	if (pDoc->m_bHatch)
 	{
 
-		for (int x = 0; x < rc.Width(); x++)
+		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+
+		for (int x = 0; x < rc.Width()-1; x++)
 		{
-			double X_rad = x * frequency;
-			int y = rc.Height() / 2 + sin(X_rad);// / my;
-			/*CPen pen(PS_SOLID, 1, RGB(0, 255, 0));
+			double phase = x; // смещение
+			double frequency = (2 * PI * phase) / rc.Width(); // частота
+			double amplitude = -sin(frequency); // амплитуда
+			int y = (halfY + halfY * amplitude);
 
-			pOld = pDC->SelectObject(&pen);*/
-			if (x % 20 == 0)
+			if (x % 20 == 0 && x > width / 2)
 			{
-				pDC->MoveTo(x, y);
-				pDC->LineTo(x, rc.Height() / 2);
-
+				pDC->SelectObject(&penYellow);
+				pDC->MoveTo(x, halfY); // перемещаемся на новую точку
+				pDC->LineTo(x, y); // рисуем линию
 			}
-			//pDC->LineTo(x, y);
-			//pDC->SelectObject(pOld);
 		}
 
 	}
