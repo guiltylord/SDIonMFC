@@ -112,11 +112,14 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	SetActiveView((CView*)m_wndSplitter.GetPane(0, 1));
 
 	CFooDoc* pDoc = (CFooDoc*)GetActiveDocument();
+	CFooView* pView = (CFooView*)GetActiveView();
 
 	pDoc->m_pTree = (CMyTreeView*)m_wndSplitter.GetPane(0, 0);
 
-
 	pDoc->m_pTree->m_pDoc = pDoc;
+	pDoc->m_pView = pView;
+
+///надо инициализировать m_pView
 
 	//todo
 	return TRUE;
