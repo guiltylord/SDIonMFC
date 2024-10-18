@@ -121,8 +121,13 @@ void CFooView::drawSin()
 	CDC* pDC = this->GetWindowDC();
 
 	CPen penBlue (PS_SOLID, 1, RGB(0, 0, 255));
-	CPen penYellow(PS_SOLID, 1, RGB(0, 180, 0));
+	CPen penGreen(PS_SOLID, 1, RGB(0, 255, 0));
+	CBrush brush(HS_DIAGCROSS, RGB(255, 0, 0));
+
 	CPen* pOldPen = pDC->SelectObject(&penBlue);
+	CBrush* pOldBrush = pDC->SelectObject(&brush);
+
+	vector <POINT> pointsVec;
 
 	int acc = rc.Width();
 	int height = rc.Height() / 2;
@@ -134,7 +139,8 @@ void CFooView::drawSin()
 		double amplitude = -sin(frequency); // амплитуда
 		int y = (height + height * amplitude);
 
-		if (x == 0) {
+		if (x == 0) 
+		{
 			pDC->MoveTo(x, y); 
 		}
 		else 
@@ -142,18 +148,24 @@ void CFooView::drawSin()
 			pDC->SelectObject(&penBlue);
 			pDC->LineTo(x, y);
 		}
-
-		if (x % 20 == 0 && x > acc / 2) 
+		
+		if (x > acc / 2) 
 		{
-			pDC->SelectObject(&penYellow);
-			pDC->MoveTo(x, height); // перемещаемся на новую точку
-			pDC->LineTo(x, y); // рисуем линию
+			POINT point =
+			{ x = x,
+			y = y };
+
+			pointsVec.push_back(point);
 		}
 	}
 
+	POINT* pointsArr = new POINT[pointsVec.size()];
+	for (int i = 0; i < pointsVec.size(); i++)
+		pointsArr[i] = pointsVec[i];
 
+	pDC->Polygon(pointsArr, pointsVec.size());
 
-
+	pDC->SelectObject(pOldBrush);
 	pDC->SelectObject(pOldPen);
 }
 
