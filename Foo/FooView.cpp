@@ -122,7 +122,7 @@ void CFooView::drawSin()
 
 	CPen penBlue (PS_SOLID, 1, RGB(0, 0, 255));
 	CPen penYellow(PS_SOLID, 1, RGB(0, 180, 0));
-	CPen penIs(PS_SOLID, 1, RGB(204, 0, 204));
+	CPen penDent(PS_SOLID, 1, RGB(204, 0, 204));
 	CPen* pOldPen = pDC->SelectObject(&penBlue);
 
 	int width = rc.Width();
@@ -153,7 +153,7 @@ void CFooView::drawSin()
 
 	pDC->SelectObject(&penYellow);
 
-	int step = 10;
+	int step = 50;
 	for (int x = halfX; x < rc.Width(); x++)
 	{
 		pDC->MoveTo(x, halfY);
@@ -173,7 +173,7 @@ void CFooView::drawSin()
 		}
 	}
 
-	pDC->SelectObject(&penIs);
+	/*pDC->SelectObject(&penDent);
 	for (int x = halfX; x < rc.Width(); x++)
 	{
 		pDC->MoveTo(x, halfY);
@@ -181,7 +181,7 @@ void CFooView::drawSin()
 		{
 			pDC->LineTo(x, -height);
 		}
-	}
+	}*/
 
 	pDC->SelectObject(pOldPen);
 }
