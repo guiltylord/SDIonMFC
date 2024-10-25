@@ -191,44 +191,40 @@ void CFooView::OnDraw(CDC* pDC)
 		CRect rc;
 		GetClientRect(&rc);
 
-		CDC* pDC = this->GetWindowDC();
+		CBrush brush;
+		brush.CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 0));
 
-		CPen penBlue(PS_SOLID, 1, RGB(0, 0, 255));
-		CPen penGreen(PS_SOLID, 1, RGB(0, 255, 0));
-		CBrush brush(HS_DIAGCROSS, RGB(255, 0, 0));
-
-		CPen* pOldPen = pDC->SelectObject(&penBlue);
 		CBrush* pOldBrush = pDC->SelectObject(&brush);
 
 		std::vector<POINT> pointsVec;
+		int width = rc.Width();
+		int height = rc.Height();
 
-		for (int x = 0; x < width; x++)
+		for (int x = 0; x < width; x++) 
 		{
-			double phase = x; // смещение
-			double frequency = (2 * PI * phase) / width; // частота
-			double amplitude = -sin(frequency); // амплитуда
-			int y = (height + height * amplitude);
+			double phase = x;  
+			double frequency = (2 * PI * phase) / width; 
+			double amplitude = -sin(frequency); 
+			int y = (height / 2) + (height / 2 * amplitude); 
 
-			if (x > width / 2)
+			if (x > width / 2) 
 			{
-				POINT point =
-				{ x = x,
-				y = y };
-
+				POINT point = { x, y };
 				pointsVec.push_back(point);
 			}
 		}
 
-		POINT* pointsArr = new POINT[pointsVec.size()];
-		for (int i = 0; i < pointsVec.size(); i++)
-			pointsArr[i] = pointsVec[i];
+		if (!pointsVec.empty()) 
+		{
+			POINT* pointsArr = new POINT[pointsVec.size()];
+			for (size_t i = 0; i < pointsVec.size(); i++)
+				pointsArr[i] = pointsVec[i];
 
-		pDC->Polygon(pointsArr, pointsVec.size());
-
+			pDC->Polygon(pointsArr, pointsVec.size());
+			delete[] pointsArr;
+		}
 		pDC->SelectObject(pOldBrush);
-		pDC->SelectObject(pOldPen);
 	}
-		
 	pDC->SelectObject(&oldPen);
 }
 
