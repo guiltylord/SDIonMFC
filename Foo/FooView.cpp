@@ -90,16 +90,16 @@ void CFooView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
+	CPen* oldPen;
 	CRect rc;
+	CPen penRed(PS_SOLID, 3, RGB(255, 0, 0));
 	GetClientRect(&rc);
-	CPen pen(PS_SOLID, 1, RGB(50, 200, 140));
-
-	CPen penBlue(PS_SOLID, 1, RGB(0, 0, 255));
-	CPen penYellow(PS_SOLID, 1, RGB(150, 50, 200));
-	CPen * oldPen = pDC->SelectObject(&pen);
+	CPen penMain(PS_SOLID, 3, RGB(50, 200, 140));
+	CPen penBlue(PS_SOLID, 3, RGB(0, 0, 255));
+	CPen penYellow(PS_SOLID, 3, RGB(150, 50, 200));
+	CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
 
 	double frequency = 2 * 3.14 / rc.Width();
-
 
 	int height = rc.Height();
 	int halfY = height/2;
@@ -111,8 +111,7 @@ void CFooView::OnDraw(CDC* pDC)
 
 	if (pDoc->m_bSinus)
 	{
-		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
-
+		oldPen = pDC->SelectObject(&penRed);
 		for (int x = 0; x < rc.Width(); x++)
 		{
 			double phase = x; // смещение
@@ -125,24 +124,26 @@ void CFooView::OnDraw(CDC* pDC)
 			}
 			else
 			{
-				pDC->SelectObject(&pen);
 				pDC->LineTo(x, y);
 			}
 		}
+		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bCoord)
 	{
-		pDC->SelectObject(&pen);
-		pDC->MoveTo(0, rc.Height() / 2);
-		pDC->LineTo(rc.Width(), rc.Height() / 2);
+		oldPen = pDC->SelectObject(&penBlue);
 		
 		pDC->MoveTo(0, rc.Height() / 2);
+		pDC->LineTo(rc.Width(), rc.Height() / 2);
+		pDC->MoveTo(0, rc.Height() / 2);
+
+		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bHatch)
 	{
-		CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+		oldPen = pDC->SelectObject(&penMain);
 
 		for (int x = 0; x < rc.Width()-1; x++)
 		{
@@ -153,16 +154,17 @@ void CFooView::OnDraw(CDC* pDC)
 
 			if (x % step == 0 && x > width / 2)
 			{
-				pDC->SelectObject(&penYellow);
 				pDC->MoveTo(x, halfY); // перемещаемся на новую точку
 				pDC->LineTo(x, y); // рисуем линию
 			}
 		}
 
+		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bHatch45)
 	{
+		oldPen = pDC->SelectObject(&penYellow);
 		for (int x = halfX; x < rc.Width(); x++)
 		{
 			pDC->MoveTo(x, halfY);
@@ -176,11 +178,12 @@ void CFooView::OnDraw(CDC* pDC)
 				double root = bisection(a, b_val, 1, b, halfY, halfX);
 				double y = halfY * sin(PI / halfX * root);
 
-				double Y = height - halfY - y;
+				double Y = height - halfY + y;
 				double X = halfX + root;
 				pDC->LineTo(X, Y);
 			}
 		}
+		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bBrush)

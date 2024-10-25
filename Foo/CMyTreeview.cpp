@@ -132,6 +132,6 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_pDoc->m_bHatch = tree.GetCheck(m_hHatch);
 	m_pDoc->m_bHatch45 = tree.GetCheck(m_hStreaks45);
 	m_pDoc->m_bBrush = tree.GetCheck(m_hBrush);
-
+	bool A = m_pDoc->m_bBrush;
 	m_pDoc->m_pView->Invalidate();
 }
