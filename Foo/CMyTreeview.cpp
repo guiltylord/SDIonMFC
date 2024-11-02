@@ -58,7 +58,7 @@ void CMyTreeView::FillTree()
 
 	m_hCoord = tree.InsertItem(L"Систем коорд", -1, -1, m_hMain, TVI_FIRST);
 	m_hSinus = tree.InsertItem(L"Синус", -1, -1, m_hMain, TVI_ROOT);
-	m_hHatch = tree.InsertItem(L"Штриховка", -1, -1, m_hMain, TVI_ROOT);
+	m_hStreaks = tree.InsertItem(L"Штриховка", -1, -1, m_hMain, TVI_ROOT);
 	m_hStreaks45 = tree.InsertItem(L"45", -1, -1, m_hMain, TVI_ROOT);
 	m_hBrush = tree.InsertItem(L"Bruh", -1, -1, m_hMain, TVI_ROOT);
 	
@@ -66,8 +66,8 @@ void CMyTreeView::FillTree()
 
 	tree.SetCheck(m_hCoord, m_pDoc->m_bCoord);
 	tree.SetCheck(m_hSinus, m_pDoc->m_bSinus);
-	tree.SetCheck(m_hHatch, m_pDoc->m_bHatch);
-	tree.SetCheck(m_hStreaks45, m_pDoc->m_bHatch45);
+	tree.SetCheck(m_hStreaks, m_pDoc->m_bStreaks);
+	tree.SetCheck(m_hStreaks45, m_pDoc->m_bStreaks45);
 	tree.SetCheck(m_hBrush, m_pDoc->m_bBrush);
 }
 
@@ -107,9 +107,9 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hSinus);
 
-	tree.GetItemRect(m_hHatch, &rc, false);
+	tree.GetItemRect(m_hStreaks, &rc, false);
 	if (rc.PtInRect(point))
-		tree.SelectItem(m_hHatch);
+		tree.SelectItem(m_hStreaks);
 	
 	tree.GetItemRect(m_hStreaks45, &rc, false);
 	if (rc.PtInRect(point))
@@ -126,7 +126,7 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 		bool check = tree.GetCheck(m_hMain);
 		tree.SetCheck(m_hCoord, check);
 		tree.SetCheck(m_hSinus, check);
-		tree.SetCheck(m_hHatch, check);
+		tree.SetCheck(m_hStreaks, check);
 		tree.SetCheck(m_hStreaks45, check);
 		tree.SetCheck(m_hBrush, check);
 	}
@@ -135,8 +135,8 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	m_pDoc->m_bCoord = tree.GetCheck(m_hCoord);
 	m_pDoc->m_bSinus = tree.GetCheck(m_hSinus);
-	m_pDoc->m_bHatch = tree.GetCheck(m_hHatch);
-	m_pDoc->m_bHatch45 = tree.GetCheck(m_hStreaks45);
+	m_pDoc->m_bStreaks = tree.GetCheck(m_hStreaks);
+	m_pDoc->m_bStreaks45 = tree.GetCheck(m_hStreaks45);
 	m_pDoc->m_bBrush = tree.GetCheck(m_hBrush);
 	
 	m_pDoc->m_pView->Invalidate();

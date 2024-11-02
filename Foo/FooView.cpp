@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CFooView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_RBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // Создание или уничтожение CFooView
@@ -141,7 +142,7 @@ void CFooView::OnDraw(CDC* pDC)
 		pDC->SelectObject(&oldPen);
 	}
 
-	if (pDoc->m_bHatch)
+	if (pDoc->m_bStreaks)
 	{
 		oldPen = pDC->SelectObject(&penMain);
 
@@ -162,7 +163,7 @@ void CFooView::OnDraw(CDC* pDC)
 		pDC->SelectObject(&oldPen);
 	}
 
-	if (pDoc->m_bHatch45)
+	if (pDoc->m_bStreaks45)
 	{
 		oldPen = pDC->SelectObject(&penYellow);
 		for (int x = halfX; x < rc.Width(); x++)
@@ -270,3 +271,28 @@ CFooDoc* CFooView::GetDocument() const // встроена неотлаженн�
 
 
 // Обработчики сообщений CFooView
+
+
+void CFooView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	ClientToScreen(&point);
+
+	CCmdUI state;
+
+	CMenu* pMenu = AfxGetMainWnd()->GetMenu()->GetSubMenu(3);
+
+	state.m_pMenu = pMenu;
+	state.m_nIndexMax = pMenu->GetMenuItemCount();
+	for (UINT i = 0; i < state.m_nIndexMax; i++)
+	{
+		state.m_nIndex = i;
+		state.m_nID = pMenu->GetMenuItemID(i);
+		state.DoUpdate(this, FALSE);
+	}
+
+	pMenu->TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, this);
+
+	CView::OnRButtonDown(nFlags, point);
+}

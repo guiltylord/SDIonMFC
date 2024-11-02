@@ -41,7 +41,7 @@ void CLineDlg::OnBnClickedCheck2()
 	// TODO: добавьте свой код обработчика уведомлений
 	flag != flag;
 
-	m_pDoc->m_bHatch;
+	m_pDoc->m_bStreaks;
 }
 
 

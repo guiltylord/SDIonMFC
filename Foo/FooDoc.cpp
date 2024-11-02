@@ -68,7 +68,7 @@ BOOL CFooDoc::OnNewDocument()
 
 	m_pTree->m_pDoc = this;
 	m_pTree->FillTree();
-	m_bHatch45 = m_bCoord = m_bSinus = m_bHatch = m_bBrush = false;
+	m_bStreaks45 = m_bCoord = m_bSinus = m_bStreaks = m_bBrush = false;
 	return TRUE;
 }
 
@@ -179,11 +179,11 @@ void CFooDoc::OnMymenuSetup()
 {
 	// TODO: добавьте свой код обработчика команд
 	CLineDlg dlg;
-	dlg.flag = m_bHatch;
+	dlg.flag = m_bStreaks;
 
 	if (dlg.DoModal() == IDOK)
 	{
-		m_bHatch = dlg.flag;
+		m_bStreaks = dlg.flag;
 		
 		UpdateAllViews(NULL);
 	}
@@ -197,7 +197,7 @@ void CFooDoc::OnMymenuSetupNotmodal()
 	if(!m_setupDlg)
 		m_setupDlg.Create(IDD_DIALOG1);
 
-	m_setupDlg.flag = m_bHatch;
+	m_setupDlg.flag = m_bStreaks;
 
 	m_setupDlg.m_pDoc = this;
 
@@ -235,29 +235,29 @@ void CFooDoc::OnUpdateObjectsSinus(CCmdUI* pCmdUI)
 
 void CFooDoc::OnObjectsStreaks()
 {
-	m_bHatch = !m_bHatch;
+	m_bStreaks = !m_bStreaks;
 	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hHatch, m_bHatch);
+	tree.SetCheck(m_pTree->m_hStreaks, m_bStreaks);
 	m_pView->Invalidate();
 }
 
 void CFooDoc::OnUpdateObjectsStreaks(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_bHatch);
+	pCmdUI->SetCheck(m_bStreaks);
 }
 
 
 void CFooDoc::OnObjectsStreaks45()
 {
-	m_bHatch45 = !m_bHatch45;
+	m_bStreaks45 = !m_bStreaks45;
 	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hStreaks45, m_bHatch45);
+	tree.SetCheck(m_pTree->m_hStreaks45, m_bStreaks45);
 	m_pView->Invalidate();
 }
 
 void CFooDoc::OnUpdateObjectsStreaks45(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(m_bHatch45);
+	pCmdUI->SetCheck(m_bStreaks45);
 }
 
 
