@@ -7,8 +7,15 @@
 #define IDR_MAINFRAME                   128
 #define IDR_FooTYPE                     130
 #define IDD_DIALOG1                     310
+#define IDD_OBJECTS_DLG                 310
 #define IDC_CHECK1                      1000
+#define IDC_OBJECTS_DLG_SINUS           1000
 #define IDC_CHECK2                      1001
+#define IDC_OBJECTS_DLG_COORDS          1001
+#define IDC_OBJECTS_DLG_STREAKS         1002
+#define IDC_OBJECTS_DLG_STREAKS45       1003
+#define IDC_CHECK5                      1004
+#define IDC_OBJECTS_DLG_BRUSH           1004
 #define ID_32771                        32771
 #define MYMENU_SETUP                    32772
 #define ID_32773                        32773
