@@ -10,6 +10,7 @@
 #include "CLineDlg.h"
 
 class CFooView;
+
 class cl
 {
 public:
@@ -34,9 +35,7 @@ public:
 	cl data;
 
 	CMyTreeView* m_pTree;
-
 	CFooView* m_pView;
-
 	CLineDlg m_setupDlg;
 // Операции
 public:
@@ -70,4 +69,5 @@ protected:
 public:
 	afx_msg void OnMymenuSetup();
 	afx_msg void OnMymenuSetupNotmodal();
+	afx_msg void OnObjectsSinus();
 };

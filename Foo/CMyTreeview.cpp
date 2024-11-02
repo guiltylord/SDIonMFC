@@ -88,34 +88,35 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//CTreeView::OnLButtonDown(nFlags, point);
 
-	CTreeCtrl& tree = GetTreeCtrl();
 	CTreeView::OnLButtonDown(nFlags, point);
 
+	CTreeCtrl& tree = GetTreeCtrl();
 	CRect rc;/*
 	tree.GetItemRect(m_hCoord, &rc, false);*/
 
+	tree.GetItemRect(m_hCoord, &rc, false);
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hCoord);
-	tree.GetItemRect(m_hCoord, &rc, false);
 
+	tree.GetItemRect(m_hSinus, &rc, false);
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hSinus);
-	tree.GetItemRect(m_hSinus, &rc, false);
 
+	tree.GetItemRect(m_hHatch, &rc, false);
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hHatch);
-	tree.GetItemRect(m_hHatch, &rc, false);
 	
+	tree.GetItemRect(m_hStreaks45, &rc, false);
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hStreaks45);
-	tree.GetItemRect(m_hStreaks45, &rc, false);
 	
+	tree.GetItemRect(m_hBrush, &rc, false);
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hBrush);
-	tree.GetItemRect(m_hBrush, &rc, false);
 
-
-	if (tree.GetSelectedItem() == m_hMain)
+	//why i can fix it?
+	tree.GetItemRect(m_hMain, &rc, false);
+	if (rc.PtInRect(point))
 	{
 		bool check = tree.GetCheck(m_hMain);
 		tree.SetCheck(m_hCoord, check);
@@ -132,6 +133,6 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_pDoc->m_bHatch = tree.GetCheck(m_hHatch);
 	m_pDoc->m_bHatch45 = tree.GetCheck(m_hStreaks45);
 	m_pDoc->m_bBrush = tree.GetCheck(m_hBrush);
-	bool A = m_pDoc->m_bBrush;
+	
 	m_pDoc->m_pView->Invalidate();
 }

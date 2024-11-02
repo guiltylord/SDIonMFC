@@ -13,6 +13,7 @@
 #endif
 
 #include "FooDoc.h"
+#include "FooView.h"
 #include "CLineDlg.h"
 
 #include <propkey.h>
@@ -28,6 +29,7 @@ IMPLEMENT_DYNCREATE(CFooDoc, CDocument)
 BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_COMMAND(MYMENU_SETUP, &CFooDoc::OnMymenuSetup)
 	ON_COMMAND(MYMENU_SETUP_NOTMODAL, &CFooDoc::OnMymenuSetupNotmodal)
+	ON_COMMAND(ID_OBJECTS_SINUS, &CFooDoc::OnObjectsSinus)
 END_MESSAGE_MAP()
 
 
@@ -191,4 +193,12 @@ void CFooDoc::OnMymenuSetupNotmodal()
 	m_setupDlg.m_pDoc = this;
 
 	m_setupDlg.ShowWindow(SW_SHOW);
+}
+
+
+void CFooDoc::OnObjectsSinus()
+{
+	// TODO: Add your command handler code here
+	m_bSinus != m_bSinus;
+	m_pView->Invalidate();
 }
