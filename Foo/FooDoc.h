@@ -70,4 +70,5 @@ public:
 	afx_msg void OnMymenuSetup();
 	afx_msg void OnMymenuSetupNotmodal();
 	afx_msg void OnObjectsSinus();
+	afx_msg void OnUpdateObjectsSinus(CCmdUI* pCmdUI);
 };

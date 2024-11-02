@@ -64,6 +64,11 @@ void CMyTreeView::FillTree()
 	
 	tree.Expand(m_hMain, TVE_EXPAND);
 
+	tree.SetCheck(m_hCoord, m_pDoc->m_bCoord);
+	tree.SetCheck(m_hSinus, m_pDoc->m_bSinus);
+	tree.SetCheck(m_hHatch, m_pDoc->m_bHatch);
+	tree.SetCheck(m_hStreaks45, m_pDoc->m_bHatch45);
+	tree.SetCheck(m_hBrush, m_pDoc->m_bBrush);
 }
 
 int CMyTreeView::OnCreate(LPCREATESTRUCT lpCreateStruct)

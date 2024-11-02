@@ -30,6 +30,7 @@ BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_COMMAND(MYMENU_SETUP, &CFooDoc::OnMymenuSetup)
 	ON_COMMAND(MYMENU_SETUP_NOTMODAL, &CFooDoc::OnMymenuSetupNotmodal)
 	ON_COMMAND(ID_OBJECTS_SINUS, &CFooDoc::OnObjectsSinus)
+	ON_UPDATE_COMMAND_UI(ID_OBJECTS_SINUS, &CFooDoc::OnUpdateObjectsSinus)
 END_MESSAGE_MAP()
 
 
@@ -199,6 +200,17 @@ void CFooDoc::OnMymenuSetupNotmodal()
 void CFooDoc::OnObjectsSinus()
 {
 	// TODO: Add your command handler code here
-	m_bSinus != m_bSinus;
+	m_bSinus = !m_bSinus;
+	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
+	tree.SetCheck(m_pTree->m_hSinus, m_bSinus);
 	m_pView->Invalidate();
+}
+
+
+void CFooDoc::OnUpdateObjectsSinus(CCmdUI* pCmdUI)
+{
+	// TODO: Add your command update UI handler code here
+	
+	pCmdUI->SetCheck(m_bSinus);
+	m_pTree->FillTree();
 }
