@@ -97,8 +97,8 @@ void CFooView::OnDraw(CDC* pDC)
 	GetClientRect(&rc);
 	CPen penMain(PS_SOLID, 3, RGB(50, 200, 140));
 	CPen penBlue(PS_SOLID, 3, RGB(0, 0, 255));
-	CPen penYellow(PS_SOLID, 3, RGB(150, 50, 200));
-	CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+	CPen penYellow(PS_SOLID, 3, RGB(204, 204, 0));
+	CPen penViol(PS_SOLID, 1, RGB(150, 50, 200));
 
 	double frequency = 2 * 3.14 / rc.Width();
 
@@ -191,9 +191,11 @@ void CFooView::OnDraw(CDC* pDC)
 	{
 		CRect rc;
 		GetClientRect(&rc);
+		
+		oldPen = pDC->SelectObject(&penViol);
 
 		CBrush brush;
-		brush.CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 0));
+		brush.CreateHatchBrush(HS_FDIAGONAL, RGB(255, 0, 0));
 
 		CBrush* pOldBrush = pDC->SelectObject(&brush);
 
@@ -201,21 +203,21 @@ void CFooView::OnDraw(CDC* pDC)
 		int width = rc.Width();
 		int height = rc.Height();
 
-		for (int x = 0; x < width; x++) 
+		for (int x = 0; x < width; x++)
 		{
-			double phase = x;  
-			double frequency = (2 * PI * phase) / width; 
-			double amplitude = -sin(frequency); 
-			int y = (height / 2) + (height / 2 * amplitude); 
+			double phase = x;
+			double frequency = (2 * PI * phase) / width;
+			double amplitude = -sin(frequency);
+			int y = (height / 2) + (height / 2 * amplitude);
 
-			if (x > width / 2) 
+			if (x > width / 2)
 			{
 				POINT point = { x, y };
 				pointsVec.push_back(point);
 			}
 		}
 
-		if (!pointsVec.empty()) 
+		if (!pointsVec.empty())
 		{
 			POINT* pointsArr = new POINT[pointsVec.size()];
 			for (size_t i = 0; i < pointsVec.size(); i++)
@@ -225,8 +227,8 @@ void CFooView::OnDraw(CDC* pDC)
 			delete[] pointsArr;
 		}
 		pDC->SelectObject(pOldBrush);
+	    pDC->SelectObject(&oldPen);
 	}
-	pDC->SelectObject(&oldPen);
 }
 
 
