@@ -10,42 +10,42 @@
 
 // Диалоговое окно CLineDlg
 
-IMPLEMENT_DYNAMIC(CLineDlg, CDialog)
+IMPLEMENT_DYNAMIC(CObjectsDlg, CDialog)
 
-CLineDlg::CLineDlg(CWnd* pParent /*=nullptr*/)
+CObjectsDlg::CObjectsDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_DIALOG1, pParent)
 {
 
 }
 
-CLineDlg::~CLineDlg()
+CObjectsDlg::~CObjectsDlg()
 {
 }
 
-void CLineDlg::DoDataExchange(CDataExchange* pDX)
+void CObjectsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CLineDlg, CDialog)
-	ON_BN_CLICKED(IDC_CHECK2, &CLineDlg::OnBnClickedCheck2)
+BEGIN_MESSAGE_MAP(CObjectsDlg, CDialog)
+	ON_BN_CLICKED(IDC_CHECK2, &CObjectsDlg::OnBnClickedCheck2)
 END_MESSAGE_MAP()
 
 
 // Обработчики сообщений CLineDlg
 
 
-void CLineDlg::OnBnClickedCheck2()
+void CObjectsDlg::OnBnClickedCheck2()
 {
 	// TODO: добавьте свой код обработчика уведомлений
-	flag != flag;
+	flag = !flag;
 
 	m_pDoc->m_bStreaks;
 }
 
 
-BOOL CLineDlg::OnInitDialog()
+BOOL CObjectsDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 

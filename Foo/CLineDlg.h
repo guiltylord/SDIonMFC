@@ -5,13 +5,13 @@ class CFooDoc;
 
 // Диалоговое окно CLineDlg
 
-class CLineDlg : public CDialog
+class CObjectsDlg : public CDialog
 {
-	DECLARE_DYNAMIC(CLineDlg)
+	DECLARE_DYNAMIC(CObjectsDlg)
 
 public:
-	CLineDlg(CWnd* pParent = nullptr);   // стандартный конструктор
-	virtual ~CLineDlg();
+	CObjectsDlg(CWnd* pParent = nullptr);   // стандартный конструктор
+	virtual ~CObjectsDlg();
 
 	CFooDoc* m_pDoc;
 // Данные диалогового окна

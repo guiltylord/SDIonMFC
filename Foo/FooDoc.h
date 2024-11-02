@@ -36,7 +36,7 @@ public:
 
 	CMyTreeView* m_pTree;
 	CFooView* m_pView;
-	CLineDlg m_setupDlg;
+	CObjectsDlg m_setupDlg;
 // Операции
 public:
 // Переопределение
@@ -79,4 +79,5 @@ public:
 	afx_msg void OnUpdateObjectsStreaks45(CCmdUI* pCmdUI);
 	afx_msg void OnObjectsBrush();
 	afx_msg void OnUpdateObjectsBrush(CCmdUI* pCmdUI);
+	afx_msg void OnObjectsDialogue();
 };

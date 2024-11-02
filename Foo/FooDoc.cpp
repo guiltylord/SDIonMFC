@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS45, &CFooDoc::OnUpdateObjectsStreaks45)
 	ON_COMMAND(ID_OBJECTS_BRUSH, &CFooDoc::OnObjectsBrush)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_BRUSH, &CFooDoc::OnUpdateObjectsBrush)
+	ON_COMMAND(ID_OBJECTS_DIALOGUE, &CFooDoc::OnObjectsDialogue)
 END_MESSAGE_MAP()
 
 
@@ -178,7 +179,7 @@ void CFooDoc::Dump(CDumpContext& dc) const
 void CFooDoc::OnMymenuSetup()
 {
 	// TODO: добавьте свой код обработчика команд
-	CLineDlg dlg;
+	CObjectsDlg dlg;
 	dlg.flag = m_bStreaks;
 
 	if (dlg.DoModal() == IDOK)
@@ -272,4 +273,10 @@ void CFooDoc::OnObjectsBrush()
 void CFooDoc::OnUpdateObjectsBrush(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck(m_bBrush);
+}
+
+
+void CFooDoc::OnObjectsDialogue()
+{
+	// TODO: Add your command handler code here
 }
