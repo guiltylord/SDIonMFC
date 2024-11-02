@@ -71,4 +71,12 @@ public:
 	afx_msg void OnMymenuSetupNotmodal();
 	afx_msg void OnObjectsSinus();
 	afx_msg void OnUpdateObjectsSinus(CCmdUI* pCmdUI);
+	afx_msg void OnObjectsCoordinates();
+	afx_msg void OnUpdateObjectsCoordinates(CCmdUI* pCmdUI);
+	afx_msg void OnObjectsStreaks();
+	afx_msg void OnUpdateObjectsStreaks(CCmdUI* pCmdUI);
+	afx_msg void OnObjectsStreaks45();
+	afx_msg void OnUpdateObjectsStreaks45(CCmdUI* pCmdUI);
+	afx_msg void OnObjectsBrush();
+	afx_msg void OnUpdateObjectsBrush(CCmdUI* pCmdUI);
 };

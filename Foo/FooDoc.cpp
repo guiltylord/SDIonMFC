@@ -31,6 +31,14 @@ BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_COMMAND(MYMENU_SETUP_NOTMODAL, &CFooDoc::OnMymenuSetupNotmodal)
 	ON_COMMAND(ID_OBJECTS_SINUS, &CFooDoc::OnObjectsSinus)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_SINUS, &CFooDoc::OnUpdateObjectsSinus)
+	ON_COMMAND(ID_OBJECTS_COORDINATES, &CFooDoc::OnObjectsCoordinates)
+	ON_UPDATE_COMMAND_UI(ID_OBJECTS_COORDINATES, &CFooDoc::OnUpdateObjectsCoordinates)
+	ON_COMMAND(ID_OBJECTS_STREAKS, &CFooDoc::OnObjectsStreaks)
+	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS, &CFooDoc::OnUpdateObjectsStreaks)
+	ON_COMMAND(ID_OBJECTS_STREAKS45, &CFooDoc::OnObjectsStreaks45)
+	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS45, &CFooDoc::OnUpdateObjectsStreaks45)
+	ON_COMMAND(ID_OBJECTS_BRUSH, &CFooDoc::OnObjectsBrush)
+	ON_UPDATE_COMMAND_UI(ID_OBJECTS_BRUSH, &CFooDoc::OnUpdateObjectsBrush)
 END_MESSAGE_MAP()
 
 
@@ -197,20 +205,71 @@ void CFooDoc::OnMymenuSetupNotmodal()
 }
 
 
+void CFooDoc::OnObjectsCoordinates()
+{
+	m_bCoord = !m_bCoord;
+	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
+	tree.SetCheck(m_pTree->m_hCoord, m_bCoord);
+	m_pView->Invalidate();
+}
+
+void CFooDoc::OnUpdateObjectsCoordinates(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_bCoord);
+}
+
+
 void CFooDoc::OnObjectsSinus()
 {
-	// TODO: Add your command handler code here
 	m_bSinus = !m_bSinus;
 	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
 	tree.SetCheck(m_pTree->m_hSinus, m_bSinus);
 	m_pView->Invalidate();
 }
 
-
 void CFooDoc::OnUpdateObjectsSinus(CCmdUI* pCmdUI)
 {
-	// TODO: Add your command update UI handler code here
-	
 	pCmdUI->SetCheck(m_bSinus);
-	m_pTree->FillTree();
+}
+
+
+void CFooDoc::OnObjectsStreaks()
+{
+	m_bHatch = !m_bHatch;
+	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
+	tree.SetCheck(m_pTree->m_hHatch, m_bHatch);
+	m_pView->Invalidate();
+}
+
+void CFooDoc::OnUpdateObjectsStreaks(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_bHatch);
+}
+
+
+void CFooDoc::OnObjectsStreaks45()
+{
+	m_bHatch45 = !m_bHatch45;
+	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
+	tree.SetCheck(m_pTree->m_hStreaks45, m_bHatch45);
+	m_pView->Invalidate();
+}
+
+void CFooDoc::OnUpdateObjectsStreaks45(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_bHatch45);
+}
+
+
+void CFooDoc::OnObjectsBrush()
+{
+	m_bBrush = !m_bBrush;
+	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
+	tree.SetCheck(m_pTree->m_hBrush, m_bBrush);
+	m_pView->Invalidate();
+}
+
+void CFooDoc::OnUpdateObjectsBrush(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(m_bBrush);
 }
