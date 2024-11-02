@@ -7,7 +7,7 @@
 
 #include "CMyTreeview.h"
 
-#include "CLineDlg.h"
+#include "CObjectsDlg.h"
 
 class CFooView;
 

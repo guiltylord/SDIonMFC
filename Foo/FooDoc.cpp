@@ -14,7 +14,7 @@
 
 #include "FooDoc.h"
 #include "FooView.h"
-#include "CLineDlg.h"
+#include "CObjectsDlg.h"
 
 #include <propkey.h>
 
@@ -279,4 +279,5 @@ void CFooDoc::OnUpdateObjectsBrush(CCmdUI* pCmdUI)
 void CFooDoc::OnObjectsDialogue()
 {
 	// TODO: Add your command handler code here
+
 }

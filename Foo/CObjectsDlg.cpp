@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Foo.h"
 #include "afxdialogex.h"
-#include "CLineDlg.h"
+#include "CObjectsDlg.h"
 #include "FooDoc.h"
 
 
