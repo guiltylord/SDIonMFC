@@ -42,7 +42,7 @@ void Ball::OnDraw(CDC* pDC)
 	CRgn region;
 
 	CPen pen;
-	pen.CreatePen(PS_SOLID, 1, RGB(0, 128, 255));
+	pen.CreatePen(PS_SOLID, 0, RGB(0, 128, 255));
 	CPen* oldPen = (CPen*)pDC->SelectObject(pen);
 
 	CBrush brush;
