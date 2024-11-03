@@ -54,35 +54,6 @@ BOOL CFooView::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 // Рисование CFooView
-
-double CFooView::f(double x, double m, double b, double amplitude, double period) {
-	double frequency = PI / period * x; // Частота
-	return amplitude * sin(frequency) - (1 * x + b); // Разность между синусом и уравнением прямой
-}
-
-
-double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period)
-{
-	double c;
-	while ((b - a) >= 1e-6)
-	{
-		c = (a + b) / 2; // Средняя точка
-		if (f(c, m, b_const, amplitude, period) == 0.0)
-		{
-			break; // c является корнем
-		}
-		else if (f(c, m, b_const, amplitude, period) * f(a, m, b_const, amplitude, period) < 0)
-		{
-			b = c; // Корень находится в левой части
-		}
-		else
-		{
-			a = c; // Корень находится в правой части
-		}
-	}
-	return (a + b) / -2; // Возвращаем среднюю точку как приближенную к корню
-}
-
 void CFooView::OnDraw(CDC* pDC)
 {
 	CFooDoc* pDoc = GetDocument();
@@ -122,52 +93,6 @@ void CFooView::OnDraw(CDC* pDC)
 			else
 			{
 				pDC->LineTo(x, y);
-			}
-		}
-	}
-
-	if (pDoc->m_bCoord)
-	{
-		pDC->MoveTo(0, rc.Height() / 2);
-		pDC->LineTo(rc.Width(), rc.Height() / 2);
-		pDC->MoveTo(0, rc.Height() / 2);
-	}
-
-	if (pDoc->m_bStreaks)
-	{
-		for (int x = 0; x < rc.Width()-1; x++)
-		{
-			double phase = x; // смещение
-			double frequency = (2 * PI * phase) / rc.Width(); // частота
-			double amplitude = -sin(frequency); // амплитуда
-			int y = (halfY + halfY * amplitude);
-
-			if (x % step == 0 && x > width / 2)
-			{
-				pDC->MoveTo(x, halfY); // перемещаемся на новую точку
-				pDC->LineTo(x, y); // рисуем линию
-			}
-		}
-	}
-
-	if (pDoc->m_bStreaks45)
-	{
-		for (int x = halfX; x < rc.Width(); x++)
-		{
-			pDC->MoveTo(x, halfY);
-			if (x % step == 0 && x > rc.Width() / 2)
-			{
-				double b = x - halfX; // Смещение прямой
-
-				double a = -width; // Начало интервала
-				double b_val = width; // Конец интервала
-
-				double root = bisection(a, b_val, 1, b, halfY, halfX);
-				double y = halfY * sin(PI / halfX * root);
-
-				double Y = height - halfY + y;
-				double X = halfX + root;
-				pDC->LineTo(X, Y);
 			}
 		}
 	}

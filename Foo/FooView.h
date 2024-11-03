@@ -21,9 +21,6 @@ public:
 	COLORREF m_Color;	 
 // Операции
 public:
-
-	double CFooView::f(double x, double m, double b, double amplitude, double period);
-	double CFooView::bisection(double a, double b, double m, double b_const, double amplitude, double period);
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

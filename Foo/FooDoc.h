@@ -26,13 +26,12 @@ protected: // создать только из сериализации
 
 // Атрибуты
 public:
-	bool m_bCoord, m_bSinus, m_bStreaks, m_bStreaks45, m_bBrush;
+	bool m_bSinus, m_bBrush;
 
 	int iVer = 1;
 	int Px, Py, Pz;
 
 	cl data;
-
 
 	CFooView* m_pView;
 // Операции
