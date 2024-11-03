@@ -19,9 +19,7 @@
 #define IDC_MFCCOLORBUTTON1             1006
 #define IDC_COLOR_DLG_BTN_APPLY         1007
 #define ID_32771                        32771
-#define MYMENU_SETUP                    32772
 #define ID_32773                        32773
-#define MYMENU_SETUP_NOTMODAL           32774
 #define ID_OBJECTS_SINUS                32775
 #define ID_OBJECTS_COORDINATES          32776
 #define ID_OBJECTS_STREAKS              32777

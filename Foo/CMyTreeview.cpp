@@ -54,13 +54,13 @@ void CMyTreeView::FillTree()
 	CTreeCtrl& tree = GetTreeCtrl();
 
 	tree.DeleteAllItems();
-	m_hMain = tree.InsertItem(L"Дерево построений", -1, -1, NULL, TVI_FIRST);
+	m_hMain = tree.InsertItem(L"Objects", -1, -1, NULL, TVI_FIRST);
 
-	m_hCoord = tree.InsertItem(L"Систем коорд", -1, -1, m_hMain, TVI_FIRST);
-	m_hSinus = tree.InsertItem(L"Синус", -1, -1, m_hMain, TVI_ROOT);
-	m_hStreaks = tree.InsertItem(L"Штриховка", -1, -1, m_hMain, TVI_ROOT);
-	m_hStreaks45 = tree.InsertItem(L"45", -1, -1, m_hMain, TVI_ROOT);
-	m_hBrush = tree.InsertItem(L"Bruh", -1, -1, m_hMain, TVI_ROOT);
+	m_hCoord = tree.InsertItem(L"Coordinates", -1, -1, m_hMain, TVI_FIRST);
+	m_hSinus = tree.InsertItem(L"Sinus", -1, -1, m_hMain, TVI_ROOT);
+	m_hStreaks = tree.InsertItem(L"Streaks", -1, -1, m_hMain, TVI_ROOT);
+	m_hStreaks45 = tree.InsertItem(L"Streaks45", -1, -1, m_hMain, TVI_ROOT);
+	m_hBrush = tree.InsertItem(L"Brush", -1, -1, m_hMain, TVI_ROOT);
 	
 	tree.Expand(m_hMain, TVE_EXPAND);
 
@@ -89,15 +89,10 @@ int CMyTreeView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: добавьте свой код обработчика сообщений или вызов стандартного
-
-	//CTreeView::OnLButtonDown(nFlags, point);
-
 	CTreeView::OnLButtonDown(nFlags, point);
 
 	CTreeCtrl& tree = GetTreeCtrl();
-	CRect rc;/*
-	tree.GetItemRect(m_hCoord, &rc, false);*/
+	CRect rc;
 
 	tree.GetItemRect(m_hCoord, &rc, false);
 	if (rc.PtInRect(point))
@@ -119,7 +114,6 @@ void CMyTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (rc.PtInRect(point))
 		tree.SelectItem(m_hBrush);
 
-	//why i can fix it?
 	tree.GetItemRect(m_hMain, &rc, false);
 	if (rc.PtInRect(point))
 	{

@@ -27,8 +27,6 @@
 IMPLEMENT_DYNCREATE(CFooDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
-	ON_COMMAND(MYMENU_SETUP, &CFooDoc::OnMymenuSetup)
-	ON_COMMAND(MYMENU_SETUP_NOTMODAL, &CFooDoc::OnMymenuSetupNotmodal)
 	ON_COMMAND(ID_OBJECTS_SINUS, &CFooDoc::OnObjectsSinus)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_SINUS, &CFooDoc::OnUpdateObjectsSinus)
 	ON_COMMAND(ID_OBJECTS_COORDINATES, &CFooDoc::OnObjectsCoordinates)
@@ -39,8 +37,7 @@ BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS45, &CFooDoc::OnUpdateObjectsStreaks45)
 	ON_COMMAND(ID_OBJECTS_BRUSH, &CFooDoc::OnObjectsBrush)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_BRUSH, &CFooDoc::OnUpdateObjectsBrush)
-//	ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
-ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
+	ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
 END_MESSAGE_MAP()
 
 
@@ -175,36 +172,6 @@ void CFooDoc::Dump(CDumpContext& dc) const
 
 
 // Команды CFooDoc
-
-
-void CFooDoc::OnMymenuSetup()
-{
-	// TODO: добавьте свой код обработчика команд
-	CObjectsDlg dlg;
-	dlg.flag = m_bStreaks;
-
-	if (dlg.DoModal() == IDOK)
-	{
-		m_bStreaks = dlg.flag;
-		
-		UpdateAllViews(NULL);
-	}
-}
-
-
-void CFooDoc::OnMymenuSetupNotmodal()
-{
-	// TODO: добавьте свой код обработчика команд
-
-	if(!m_setupDlg)
-		m_setupDlg.Create(IDD_OBJECTS_DLG);
-
-	m_setupDlg.flag = m_bStreaks;
-
-	m_setupDlg.m_pDoc = this;
-
-	m_setupDlg.ShowWindow(SW_SHOW);
-}
 
 
 void CFooDoc::OnObjectsCoordinates()

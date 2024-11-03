@@ -67,8 +67,6 @@ protected:
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
 public:
-	afx_msg void OnMymenuSetup();
-	afx_msg void OnMymenuSetupNotmodal();
 	afx_msg void OnObjectsSinus();
 	afx_msg void OnUpdateObjectsSinus(CCmdUI* pCmdUI);
 	afx_msg void OnObjectsCoordinates();

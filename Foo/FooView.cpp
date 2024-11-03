@@ -32,8 +32,7 @@ BEGIN_MESSAGE_MAP(CFooView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_RBUTTONDOWN()
-//	ON_COMMAND(IDD_COLOR_DLG, &CFooView::OnIddColorDlg)
-ON_COMMAND(ID_OBJECTS_COLOR, &CFooView::OnObjectsColor)
+	ON_COMMAND(ID_OBJECTS_COLOR, &CFooView::OnObjectsColor)
 END_MESSAGE_MAP()
 
 // Создание или уничтожение CFooView
@@ -296,3 +295,4 @@ void CFooView::OnObjectsColor()
 	m_ColorDlg->m_pView = this;
 	m_ColorDlg->ShowWindow(SW_SHOW);
 }
+
