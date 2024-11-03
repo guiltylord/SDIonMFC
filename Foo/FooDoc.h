@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "CMyTreeview.h"
+
 
 #include "CObjectsDlg.h"
 
@@ -34,7 +34,7 @@ public:
 
 	cl data;
 
-	CMyTreeView* m_pTree;
+
 	CFooView* m_pView;
 	CObjectsDlg m_setupDlg;
 // Операции
@@ -67,16 +67,5 @@ protected:
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
 public:
-	afx_msg void OnObjectsSinus();
-	afx_msg void OnUpdateObjectsSinus(CCmdUI* pCmdUI);
-	afx_msg void OnObjectsCoordinates();
-	afx_msg void OnUpdateObjectsCoordinates(CCmdUI* pCmdUI);
-	afx_msg void OnObjectsStreaks();
-	afx_msg void OnUpdateObjectsStreaks(CCmdUI* pCmdUI);
-	afx_msg void OnObjectsStreaks45();
-	afx_msg void OnUpdateObjectsStreaks45(CCmdUI* pCmdUI);
-	afx_msg void OnObjectsBrush();
-	afx_msg void OnUpdateObjectsBrush(CCmdUI* pCmdUI);
-//	afx_msg void OnObjectsDlg();
-	afx_msg void OnObjectsDlg();
+
 };

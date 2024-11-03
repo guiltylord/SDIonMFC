@@ -27,17 +27,6 @@
 IMPLEMENT_DYNCREATE(CFooDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
-	ON_COMMAND(ID_OBJECTS_SINUS, &CFooDoc::OnObjectsSinus)
-	ON_UPDATE_COMMAND_UI(ID_OBJECTS_SINUS, &CFooDoc::OnUpdateObjectsSinus)
-	ON_COMMAND(ID_OBJECTS_COORDINATES, &CFooDoc::OnObjectsCoordinates)
-	ON_UPDATE_COMMAND_UI(ID_OBJECTS_COORDINATES, &CFooDoc::OnUpdateObjectsCoordinates)
-	ON_COMMAND(ID_OBJECTS_STREAKS, &CFooDoc::OnObjectsStreaks)
-	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS, &CFooDoc::OnUpdateObjectsStreaks)
-	ON_COMMAND(ID_OBJECTS_STREAKS45, &CFooDoc::OnObjectsStreaks45)
-	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS45, &CFooDoc::OnUpdateObjectsStreaks45)
-	ON_COMMAND(ID_OBJECTS_BRUSH, &CFooDoc::OnObjectsBrush)
-	ON_UPDATE_COMMAND_UI(ID_OBJECTS_BRUSH, &CFooDoc::OnUpdateObjectsBrush)
-	ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
 END_MESSAGE_MAP()
 
 
@@ -65,9 +54,6 @@ BOOL CFooDoc::OnNewDocument()
 
 	CWnd* MainWnd = AfxGetMainWnd();
 
-	m_pTree->m_pDoc = this;
-	m_pTree->FillTree();
-	m_bStreaks45 = m_bCoord = m_bSinus = m_bStreaks = m_bBrush = false;
 	return TRUE;
 }
 
@@ -172,109 +158,3 @@ void CFooDoc::Dump(CDumpContext& dc) const
 
 
 // Команды CFooDoc
-
-
-void CFooDoc::OnObjectsCoordinates()
-{
-	m_bCoord = !m_bCoord;
-	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hCoord, m_bCoord);
-	m_pView->Invalidate();
-}
-
-void CFooDoc::OnUpdateObjectsCoordinates(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(m_bCoord);
-}
-
-
-void CFooDoc::OnObjectsSinus()
-{
-	m_bSinus = !m_bSinus;
-	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hSinus, m_bSinus);
-	m_pView->Invalidate();
-}
-
-void CFooDoc::OnUpdateObjectsSinus(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(m_bSinus);
-}
-
-
-void CFooDoc::OnObjectsStreaks()
-{
-	m_bStreaks = !m_bStreaks;
-	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hStreaks, m_bStreaks);
-	m_pView->Invalidate();
-}
-
-void CFooDoc::OnUpdateObjectsStreaks(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(m_bStreaks);
-}
-
-
-void CFooDoc::OnObjectsStreaks45()
-{
-	m_bStreaks45 = !m_bStreaks45;
-	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hStreaks45, m_bStreaks45);
-	m_pView->Invalidate();
-}
-
-void CFooDoc::OnUpdateObjectsStreaks45(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(m_bStreaks45);
-}
-
-
-void CFooDoc::OnObjectsBrush()
-{
-	m_bBrush = !m_bBrush;
-	CTreeCtrl& tree = m_pTree->GetTreeCtrl();
-	tree.SetCheck(m_pTree->m_hBrush, m_bBrush);
-	m_pView->Invalidate();
-}
-
-void CFooDoc::OnUpdateObjectsBrush(CCmdUI* pCmdUI)
-{
-	pCmdUI->SetCheck(m_bBrush);
-}
-
-
-
-
-
-
-
-
-
-void CFooDoc::OnObjectsDlg()
-{
-	CObjectsDlg dlg;
-
-	dlg.m_dCoord = m_bCoord;
-	dlg.m_dSinus = m_bSinus;
-	dlg.m_dStreaks = m_bStreaks;
-	dlg.m_dStreaks45 = m_bStreaks45;
-	dlg.m_dBrush = m_bBrush;
-
-	if (dlg.DoModal() == IDOK)
-	{
-		m_bCoord = dlg.m_dCoord;
-		m_bSinus = dlg.m_dSinus;
-		m_bStreaks = dlg.m_dStreaks;
-		m_bStreaks45 = dlg.m_dStreaks45;
-		m_bBrush = dlg.m_dBrush;
-
-		m_pTree->FillTree();
-		m_pTree->Invalidate(TRUE);
-
-		CWnd* pWnd = AfxGetMainWnd();
-
-		pWnd->Invalidate();
-		pWnd->UpdateWindow();
-	}
-}
