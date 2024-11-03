@@ -97,26 +97,3 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 
 // Обработчики сообщений CMainFrame
-
-
-
-//BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
-//{
-//	// TODO: добавьте специализированный код или вызов базового класса
-//	m_wndSplitter.CreateStatic(this, 1,2);
-//
-//	m_wndSplitter.CreateView(0, 0, RUNTIME_CLASS(CMyTreeView), CSize(400, 0), pContext);
-//	m_wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CFooView), CSize(0, 0), pContext);
-//
-//
-//
-//	SetActiveView((CView*)m_wndSplitter.GetPane(0, 1));
-//
-//	CFooDoc* pDoc = (CFooDoc*)GetActiveDocument();
-//
-//	pDoc->	pDoc->m_pView = (CFooView*)m_wndSplitter.GetPane(0, 1);
-//
-//	//((CMyTreeView*)m_wndSplitter.GetPane(0, 0))->m_pDoc = pDoc;
-//
-//	pDoc->	return TRUE;
-//}

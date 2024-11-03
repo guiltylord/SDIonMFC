@@ -7,7 +7,6 @@
 
 
 
-#include "CObjectsDlg.h"
 
 class CFooView;
 
@@ -36,7 +35,6 @@ public:
 
 
 	CFooView* m_pView;
-	CObjectsDlg m_setupDlg;
 // Операции
 public:
 // Переопределение

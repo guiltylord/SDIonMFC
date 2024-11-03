@@ -14,7 +14,6 @@
 
 #include "FooDoc.h"
 #include "FooView.h"
-#include "CObjectsDlg.h"
 
 #include <propkey.h>
 
