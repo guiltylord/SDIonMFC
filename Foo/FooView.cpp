@@ -59,7 +59,7 @@ BOOL CFooView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CFooView::CreateBalls(CFooDoc* pDoc)
 {
-	const int rad = 50;
+	int rad = 50;
 
 	CRect rc;
 	GetClientRect(&rc);
@@ -83,7 +83,7 @@ void CFooView::CreateBalls(CFooDoc* pDoc)
 			y = rand() % (heightMax - heightMin + 1) + heightMin;
 		}
 
-		Ball ball(x, y, rad); //ball = null
+		Ball ball(x, y);
 
 		pDoc->m_vBalls.push_back(ball);
 	}
@@ -108,8 +108,11 @@ bool CFooView::CheckCollision(POINT p, CFooDoc* pDoc)
 		if (m_pCurBall->X == ball.X && m_pCurBall->Y == ball.Y)
 			continue;
 
+		POINT p2;
+		p2.x = ball.X;
+		p2.y = ball.Y;
 
-		if (!m_pCurBall->isIntersected(p, ball.GetCoord()))
+		if (!m_pCurBall->isIntersected(p, p2))
 			return false;
 	}
 	return true;

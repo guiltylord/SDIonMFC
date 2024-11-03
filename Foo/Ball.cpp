@@ -19,11 +19,6 @@ Ball::Ball(const Ball& toCopy) //toCopy null
 	this->Y = toCopy.Y;
 }
 
-Ball::Ball(int X, int Y)
-{
-	this->X = X; 
-	this->Y = Y;
-}
 
 Ball::Ball(int x, int y, int radius)
 {
@@ -104,14 +99,6 @@ bool Ball::IsActive(POINT p)
 		return true;
 	else
 		return false;
-}
-
-POINT Ball::GetCoord()
-{
-	POINT p;
-	p.x = X;
-	p.y = Y;
-	return p;
 }
 
 

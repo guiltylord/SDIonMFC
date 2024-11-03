@@ -12,7 +12,6 @@ protected:
 
 public:
 	Ball(const Ball&);
-	Ball(int X, int Y); //useless?
 	Ball(int x, int y, int radius = 50);
 	virtual ~Ball();
 
@@ -21,8 +20,6 @@ public:
 
 	bool isIntersected(const POINT p1, const POINT p2);
 	bool IsActive(POINT p);
-
-	POINT GetCoord();
 
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 #ifdef _DEBUG
