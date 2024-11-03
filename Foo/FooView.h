@@ -19,7 +19,7 @@ public:
 	CFooDoc* GetDocument() const;
 	int step = 50;
 
-	CColorDlg m_ColorDlg;
+	CColorDlg* m_ColorDlg = nullptr;
 	COLORREF m_Color;	 
 // Операции
 public:
@@ -50,7 +50,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-//	afx_msg void OnIddColorDlg();
 	afx_msg void OnObjectsColor();
 };
 

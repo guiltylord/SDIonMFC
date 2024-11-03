@@ -94,13 +94,10 @@ void CFooView::OnDraw(CDC* pDC)
 		return;
 
 
-	CPen* oldPen;
 
-	CPen penRed(PS_SOLID, 3, RGB(255, 0, 0));
-	CPen penMain(PS_SOLID, 3, RGB(50, 200, 140));
-	CPen penBlue(PS_SOLID, 3, RGB(0, 0, 255));
-	CPen penYellow(PS_SOLID, 3, RGB(204, 204, 0));
-	CPen penViol(PS_SOLID, 1, RGB(150, 50, 200));
+	CPen pen(PS_SOLID, 3, m_Color);
+	
+	CPen* oldPen = pDC->SelectObject(&pen);
 
 	CRect rc;
 	GetClientRect(&rc);
@@ -115,7 +112,6 @@ void CFooView::OnDraw(CDC* pDC)
 
 	if (pDoc->m_bSinus)
 	{
-		oldPen = pDC->SelectObject(&penRed);
 		for (int x = 0; x < rc.Width(); x++)
 		{
 			double phase = x; // смещение
@@ -131,24 +127,17 @@ void CFooView::OnDraw(CDC* pDC)
 				pDC->LineTo(x, y);
 			}
 		}
-		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bCoord)
 	{
-		oldPen = pDC->SelectObject(&penBlue);
-		
 		pDC->MoveTo(0, rc.Height() / 2);
 		pDC->LineTo(rc.Width(), rc.Height() / 2);
 		pDC->MoveTo(0, rc.Height() / 2);
-
-		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bStreaks)
 	{
-		oldPen = pDC->SelectObject(&penMain);
-
 		for (int x = 0; x < rc.Width()-1; x++)
 		{
 			double phase = x; // смещение
@@ -162,13 +151,10 @@ void CFooView::OnDraw(CDC* pDC)
 				pDC->LineTo(x, y); // рисуем линию
 			}
 		}
-
-		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bStreaks45)
 	{
-		oldPen = pDC->SelectObject(&penYellow);
 		for (int x = halfX; x < rc.Width(); x++)
 		{
 			pDC->MoveTo(x, halfY);
@@ -187,18 +173,13 @@ void CFooView::OnDraw(CDC* pDC)
 				pDC->LineTo(X, Y);
 			}
 		}
-		pDC->SelectObject(&oldPen);
 	}
 
 	if (pDoc->m_bBrush)
 	{
-		CRect rc;
-		GetClientRect(&rc);
 		
-		oldPen = pDC->SelectObject(&penViol);
-
-		CBrush brush;
-		brush.CreateHatchBrush(HS_FDIAGONAL, RGB(255, 0, 0));
+		CBrush brush(HS_FDIAGONAL, m_Color);
+		//brush.CreateHatchBrush(;
 
 		CBrush* pOldBrush = pDC->SelectObject(&brush);
 
@@ -230,8 +211,8 @@ void CFooView::OnDraw(CDC* pDC)
 			delete[] pointsArr;
 		}
 		pDC->SelectObject(pOldBrush);
-	    pDC->SelectObject(&oldPen);
 	}
+	pDC->SelectObject(&oldPen);
 }
 
 
@@ -305,10 +286,13 @@ void CFooView::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CFooView::OnObjectsColor()
 {
-	if (!m_ColorDlg)
-		m_ColorDlg.Create(IDD_COLOR_DLG, this);
+	if (m_ColorDlg == nullptr)
+	{
+		m_ColorDlg = new CColorDlg(this);
+		m_ColorDlg->Create(IDD_COLOR_DLG, this);
+	}
 
-	m_ColorDlg.m_ColorCtrl.SetColor(m_Color);
-	m_ColorDlg.m_pView = this;
-	m_ColorDlg.ShowWindow(SW_SHOW);
+	m_ColorDlg->m_ColorCtrl.SetColor(m_Color);
+	m_ColorDlg->m_pView = this;
+	m_ColorDlg->ShowWindow(SW_SHOW);
 }

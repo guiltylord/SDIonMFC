@@ -41,6 +41,7 @@ END_MESSAGE_MAP()
 void CColorDlg::OnBnClickedColorDlgBtnApply()
 {
 	// TODO: Add your control notification handler code here
+	EndDialog(IDOK);
 }
 
 

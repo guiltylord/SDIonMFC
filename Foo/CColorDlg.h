@@ -26,7 +26,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedColorDlgBtnApply();
 	CMFCColorButton m_ColorCtrl;
+	afx_msg void OnBnClickedColorDlgBtnApply();
 	afx_msg void OnBnClickedMfccolorbutton1();
 };
