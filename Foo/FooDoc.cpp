@@ -39,7 +39,8 @@ BEGIN_MESSAGE_MAP(CFooDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_STREAKS45, &CFooDoc::OnUpdateObjectsStreaks45)
 	ON_COMMAND(ID_OBJECTS_BRUSH, &CFooDoc::OnObjectsBrush)
 	ON_UPDATE_COMMAND_UI(ID_OBJECTS_BRUSH, &CFooDoc::OnUpdateObjectsBrush)
-	ON_COMMAND(ID_OBJECTS_DIALOGUE, &CFooDoc::OnObjectsDialogue)
+//	ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
+ON_COMMAND(ID_OBJECTS_DLG, &CFooDoc::OnObjectsDlg)
 END_MESSAGE_MAP()
 
 
@@ -196,7 +197,7 @@ void CFooDoc::OnMymenuSetupNotmodal()
 	// TODO: добавьте свой код обработчика команд
 
 	if(!m_setupDlg)
-		m_setupDlg.Create(IDD_DIALOG1);
+		m_setupDlg.Create(IDD_OBJECTS_DLG);
 
 	m_setupDlg.flag = m_bStreaks;
 
@@ -276,8 +277,37 @@ void CFooDoc::OnUpdateObjectsBrush(CCmdUI* pCmdUI)
 }
 
 
-void CFooDoc::OnObjectsDialogue()
-{
-	// TODO: Add your command handler code here
 
+
+
+
+
+
+
+void CFooDoc::OnObjectsDlg()
+{
+	CObjectsDlg dlg;
+
+	dlg.m_dCoord = m_bCoord;
+	dlg.m_dSinus = m_bSinus;
+	dlg.m_dStreaks = m_bStreaks;
+	dlg.m_dStreaks45 = m_bStreaks45;
+	dlg.m_dBrush = m_bBrush;
+
+	if (dlg.DoModal() == IDOK)
+	{
+		m_bCoord = dlg.m_dCoord;
+		m_bSinus = dlg.m_dSinus;
+		m_bStreaks = dlg.m_dStreaks;
+		m_bStreaks45 = dlg.m_dStreaks45;
+		m_bBrush = dlg.m_dBrush;
+
+		m_pTree->FillTree();
+		m_pTree->Invalidate(TRUE);
+
+		CWnd* pWnd = AfxGetMainWnd();
+
+		pWnd->Invalidate();
+		pWnd->UpdateWindow();
+	}
 }

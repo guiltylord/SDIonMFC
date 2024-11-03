@@ -14,9 +14,11 @@ public:
 	virtual ~CObjectsDlg();
 
 	CFooDoc* m_pDoc;
+
+
 // Данные диалогового окна
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DIALOG1 };
+	enum { IDD = IDD_OBJECTS_DLG };
 #endif
 
 protected:
@@ -28,4 +30,9 @@ public:
 	bool flag;
 	virtual BOOL OnInitDialog();
 
+	BOOL m_dCoord;
+	BOOL m_dSinus;
+	BOOL m_dStreaks;
+	BOOL m_dStreaks45;
+	BOOL m_dBrush;
 };

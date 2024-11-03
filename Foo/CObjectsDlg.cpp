@@ -13,7 +13,12 @@
 IMPLEMENT_DYNAMIC(CObjectsDlg, CDialog)
 
 CObjectsDlg::CObjectsDlg(CWnd* pParent /*=nullptr*/)
-	: CDialog(IDD_DIALOG1, pParent)
+	: CDialog(IDD_OBJECTS_DLG, pParent)
+	, m_dCoord(FALSE)
+	, m_dSinus(FALSE)
+	, m_dStreaks(FALSE)
+	, m_dStreaks45(FALSE)
+	, m_dBrush(FALSE)
 {
 
 }
@@ -25,6 +30,11 @@ CObjectsDlg::~CObjectsDlg()
 void CObjectsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Check(pDX, IDC_OBJECTS_DLG_COORDS, m_dCoord);
+	DDX_Check(pDX, IDC_OBJECTS_DLG_SINUS, m_dSinus);
+	DDX_Check(pDX, IDC_OBJECTS_DLG_STREAKS, m_dStreaks);
+	DDX_Check(pDX, IDC_OBJECTS_DLG_STREAKS45, m_dStreaks45);
+	DDX_Check(pDX, IDC_OBJECTS_DLG_BRUSH, m_dBrush);
 }
 
 

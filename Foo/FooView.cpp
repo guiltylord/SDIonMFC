@@ -32,6 +32,8 @@ BEGIN_MESSAGE_MAP(CFooView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_RBUTTONDOWN()
+//	ON_COMMAND(IDD_COLOR_DLG, &CFooView::OnIddColorDlg)
+ON_COMMAND(ID_OBJECTS_COLOR, &CFooView::OnObjectsColor)
 END_MESSAGE_MAP()
 
 // Создание или уничтожение CFooView
@@ -91,22 +93,23 @@ void CFooView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
+
 	CPen* oldPen;
-	CRect rc;
+
 	CPen penRed(PS_SOLID, 3, RGB(255, 0, 0));
-	GetClientRect(&rc);
 	CPen penMain(PS_SOLID, 3, RGB(50, 200, 140));
 	CPen penBlue(PS_SOLID, 3, RGB(0, 0, 255));
 	CPen penYellow(PS_SOLID, 3, RGB(204, 204, 0));
 	CPen penViol(PS_SOLID, 1, RGB(150, 50, 200));
 
+	CRect rc;
+	GetClientRect(&rc);
 	double frequency = 2 * 3.14 / rc.Width();
 
 	int height = rc.Height();
 	int halfY = height/2;
 	int width = rc.Width();
 	int halfX = width/2;
-
 
 	double my = 2.f / rc.Height();
 
@@ -297,4 +300,15 @@ void CFooView::OnRButtonDown(UINT nFlags, CPoint point)
 	pMenu->TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, this);
 
 	CView::OnRButtonDown(nFlags, point);
+}
+
+
+void CFooView::OnObjectsColor()
+{
+	if (!m_ColorDlg)
+		m_ColorDlg.Create(IDD_COLOR_DLG, this);
+
+	m_ColorDlg.m_ColorCtrl.SetColor(m_Color);
+	m_ColorDlg.m_pView = this;
+	m_ColorDlg.ShowWindow(SW_SHOW);
 }

@@ -4,7 +4,7 @@
 
 #pragma once
 
-//#include "FooDoc.h"
+#include "CColorDlg.h"
 
 class CFooDoc;
 
@@ -18,6 +18,9 @@ protected: // создать только из сериализации
 public:
 	CFooDoc* GetDocument() const;
 	int step = 50;
+
+	CColorDlg m_ColorDlg;
+	COLORREF m_Color;	 
 // Операции
 public:
 
@@ -47,6 +50,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+//	afx_msg void OnIddColorDlg();
+	afx_msg void OnObjectsColor();
 };
 
 #ifndef _DEBUG  // версия отладки в FooView.cpp

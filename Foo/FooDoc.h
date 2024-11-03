@@ -79,5 +79,6 @@ public:
 	afx_msg void OnUpdateObjectsStreaks45(CCmdUI* pCmdUI);
 	afx_msg void OnObjectsBrush();
 	afx_msg void OnUpdateObjectsBrush(CCmdUI* pCmdUI);
-	afx_msg void OnObjectsDialogue();
+//	afx_msg void OnObjectsDlg();
+	afx_msg void OnObjectsDlg();
 };
