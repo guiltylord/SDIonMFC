@@ -20,11 +20,10 @@ Ball::Ball(const Ball& toCopy) //toCopy null
 }
 
 
-Ball::Ball(int x, int y, int radius)
+Ball::Ball(int x, int y)
 {
 	this->X = x;
 	this->Y = y;
-	R = radius;
 }
 
 Ball::~Ball()

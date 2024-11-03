@@ -12,7 +12,7 @@ protected:
 
 public:
 	Ball(const Ball&);
-	Ball(int x, int y, int radius = 50);
+	Ball(int x, int y);
 	virtual ~Ball();
 
 	int R = 50;
