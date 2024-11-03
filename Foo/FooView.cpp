@@ -32,6 +32,9 @@ BEGIN_MESSAGE_MAP(CFooView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 // Создание или уничтожение CFooView
@@ -104,10 +107,9 @@ bool CFooView::CheckCollision(POINT p, CFooDoc* pDoc)
 	{
 		if (m_pCurBall->X == ball.X && m_pCurBall->Y == ball.Y)
 			continue;
-		POINT p2;
-		p2.x = m_pCurBall->X; 
-		p2.y = m_pCurBall->Y;
-		if (!m_pCurBall->isIntersected(p, p2));
+
+
+		if (!m_pCurBall->isIntersected(p, ball.GetCoord()))
 			return false;
 	}
 	return true;
@@ -250,5 +252,57 @@ CFooDoc* CFooView::GetDocument() const // встроена неотлаженн�
 
 
 // Обработчики сообщений CFooView
+void CFooView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	CFooDoc* pDoc = GetDocument();
+
+	if (!pDoc)
+		return;
+
+	for (auto& ball : pDoc->m_vBalls)
+	{
+		if (ball.IsActive(point))
+		{
+			activeBall = true;
+			m_pCurBall = &ball;
+			break;
+		}
+	}
+}
 
 
+void CFooView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	if (activeBall)
+	{
+
+		CFooDoc* pDoc = GetDocument();
+
+		if (!pDoc)
+			return;
+
+		if (CheckCollision(point, pDoc))
+		{
+			m_pCurBall->X = point.x;
+			m_pCurBall->Y = point.y;
+		}
+		else
+		{
+			int i;
+			//m_pCurBall->MoveToValidP();
+		}
+		Invalidate();
+	}
+
+	CView::OnMouseMove(nFlags, point);
+}
+
+
+void CFooView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	activeBall = false;
+	m_pCurBall = nullptr;
+	CView::OnLButtonUp(nFlags, point);
+}
