@@ -40,10 +40,13 @@ void Ball::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
 	CRgn region;
-	// TODO: добавьте специализированный код или вызов базового класса
+
+	CPen pen;
+	pen.CreatePen(PS_SOLID, 1, RGB(0, 128, 255));
+	CPen* oldPen = (CPen*)pDC->SelectObject(pen);
 
 	CBrush brush;
-	brush.CreateSolidBrush(RGB(52, 252, 52));
+	brush.CreateSolidBrush(RGB(255, 128, 0));
 	CBrush* pOrigBrush = (CBrush*)pDC->SelectObject(&brush);
 
 	if (X <= R && Y <= R)
@@ -60,36 +63,28 @@ void Ball::OnDraw(CDC* pDC)
 	pDC->PaintRgn(&region);
 
 	pDC->SelectObject(pOrigBrush);
+	pDC->SelectObject(&oldPen);
 }
 
 
 bool Ball::isIntersected(const POINT p1, const POINT p2)
 {
-	float v1Length = sqrtf(pow(X - p1.x, 2) + pow(Y - p1.y, 2));
+	float vectorFirst = sqrt(pow(X - p1.x, 2) + pow(Y - p1.y, 2));
 
-	float v1NormX = (p1.x - X) / v1Length;
-	float v1NormY = (p1.y - Y) / v1Length;
-	
-	
-	double one = (p1.x - X) * (p2.x - X);
-	double two = (p1.y - Y) * (p2.y - Y);
-	
-	float proektV2V1 = (one + two) / v1Length;
+	float vectorFirstNormalX = (p1.x - X) / vectorFirst;
+	float vectorFirstNormalY = (p1.y - Y) / vectorFirst;
 
-	float perpX = v1NormX * proektV2V1 + X;
-	float perpY = v1NormY * proektV2V1 + Y;
+	float projection = ((p1.x - X) * (p2.x - X) + (p1.y - Y) * (p2.y - Y)) / vectorFirst;
 
-	float d = sqrtf(pow(perpX - p2.x, 2) + pow(perpY - p2.y, 2));
-	float distanceToP2 = sqrtf(pow(X - p2.x, 2) + pow(Y - p2.y, 2));
+	float perpX = vectorFirstNormalX * projection + X;
+	float perpY = vectorFirstNormalY * projection + Y;
 
-	if (d >= R || proektV2V1 < 0 || sqrtf(pow(X - p2.x, 2) + pow(Y - p2.y, 2)) > R)
-	{
+	float distanceToProjection = sqrt(pow(perpX - p2.x, 2) + pow(perpY - p2.y, 2));
+
+	if (distanceToProjection >= R || projection < 0 || sqrt(pow(X - p2.x, 2) + pow(Y - p2.y, 2)) > R)
 		return true;
-	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 bool Ball::IsActive(POINT p)

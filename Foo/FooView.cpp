@@ -42,7 +42,6 @@ END_MESSAGE_MAP()
 CFooView::CFooView() noexcept
 {
 	// TODO: добавьте код создания
-
 }
 
 CFooView::~CFooView()
@@ -94,9 +93,7 @@ bool CFooView::ValidPlacement(int x, int y, CFooDoc* pDoc)
 	for (auto& ball : pDoc->m_vBalls)
 	{
 		if (abs(ball.X - x) < ball.R * 2 && abs(ball.Y - y) < ball.R * 2)
-		{
 			return true;
-		}
 	}
 	return false;
 }
