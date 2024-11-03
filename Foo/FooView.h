@@ -6,6 +6,7 @@
 
 
 class CFooDoc;
+class Ball;
 
 class CFooView : public CView
 {
@@ -18,9 +19,12 @@ public:
 	CFooDoc* GetDocument() const;
 	int step = 50;
 
-	COLORREF m_Color;	 
+	Ball* m_pCurBall;
 // Операции
 public:
+	void CreateBalls(CFooDoc* pDoc);
+	bool ValidPlacement(int x, int y, CFooDoc* pDoc);
+	bool CheckCollision(POINT p, CFooDoc* pDoc);
 // Переопределение
 public:
 	virtual void OnDraw(CDC* pDC);  // переопределено для отрисовки этого представления

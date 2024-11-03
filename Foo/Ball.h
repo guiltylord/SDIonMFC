@@ -9,12 +9,20 @@ class Ball : public CView
 
 protected:
 	Ball();           // protected constructor used by dynamic creation
-	virtual ~Ball();
 
 public:
+	Ball(const Ball&);
+	Ball(int iX, int iY);
+	virtual ~Ball();
+
+
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 
-	int R = 30, X, Y;
+	int R = 50;
+	int X, Y;
+
+	Ball(int x, int y, int radius = 50);
+	int m_iX, m_iY;
 
 	bool isIntersected(const POINT p1, const POINT p2);
 	bool IsActive(POINT p);

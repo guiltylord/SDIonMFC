@@ -9,10 +9,18 @@
 // Ball
 
 IMPLEMENT_DYNCREATE(Ball, CView)
-
 Ball::Ball()
 {
+}
 
+Ball::Ball(int iX, int iY)
+{
+	X = iX; 
+	Y = iY;
+}
+
+Ball::Ball(const Ball&)
+{
 }
 
 Ball::~Ball()
@@ -28,7 +36,34 @@ END_MESSAGE_MAP()
 void Ball::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
-	// TODO: add draw code here
+	CRgn region;
+	// TODO: добавьте специализированный код или вызов базового класса
+
+	CBrush brush;
+	brush.CreateSolidBrush(RGB(52, 252, 52));
+	CBrush* pOrigBrush = (CBrush*)pDC->SelectObject(&brush);
+
+	if (X <= R && Y <= R)
+		return;
+
+	pDC->Ellipse(
+		X - R / 2, 
+		Y - R / 2, 
+		X + R / 2, 
+		Y + R / 2);
+	
+
+	region.CreateFromPath(pDC);
+	pDC->PaintRgn(&region);
+
+	pDC->SelectObject(pOrigBrush);
+}
+
+Ball::Ball(int x, int y, int radius)
+{
+	m_iX = x;
+	m_iY = y;
+	R = radius;
 }
 
 bool Ball::isIntersected(const POINT p1, const POINT p2)

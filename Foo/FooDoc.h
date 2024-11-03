@@ -4,6 +4,8 @@
 
 
 #pragma once
+#include <vector>
+#include "Ball.h"
 
 
 
@@ -28,17 +30,20 @@ protected: // создать только из сериализации
 public:
 	bool m_bSinus, m_bBrush;
 
-	int iVer = 1;
-	int Px, Py, Pz;
+	//int iVer = 1;
+	//int Px, Py, Pz;
 
-	cl data;
+	//cl data;
+
+	std::vector<Ball> m_vBalls;
+	Ball* m_pCurBall;
 
 	CFooView* m_pView;
 // Операции
 public:
 // Переопределение
 public:
-	virtual BOOL OnNewDocument(); // тут карочи задать можно чето при инициализации
+	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
