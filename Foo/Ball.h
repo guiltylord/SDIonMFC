@@ -12,21 +12,17 @@ protected:
 
 public:
 	Ball(const Ball&);
-	Ball(int iX, int iY);
+	Ball(int X, int Y); //useless?
+	Ball(int x, int y, int radius = 50);
 	virtual ~Ball();
-
-
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 
 	int R = 50;
 	int X, Y;
 
-	Ball(int x, int y, int radius = 50);
-	int m_iX, m_iY;
-
 	bool isIntersected(const POINT p1, const POINT p2);
 	bool IsActive(POINT p);
 
+	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 #ifndef _WIN32_WCE

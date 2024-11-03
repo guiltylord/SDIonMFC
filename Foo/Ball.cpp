@@ -13,14 +13,23 @@ Ball::Ball()
 {
 }
 
-Ball::Ball(int iX, int iY)
+Ball::Ball(const Ball& toCopy) //toCopy null
 {
-	X = iX; 
-	Y = iY;
+	this->X = toCopy.X;
+	this->Y = toCopy.Y;
 }
 
-Ball::Ball(const Ball&)
+Ball::Ball(int X, int Y)
 {
+	this->X = X; 
+	this->Y = Y;
+}
+
+Ball::Ball(int x, int y, int radius)
+{
+	this->X = x;
+	this->Y = y;
+	R = radius;
 }
 
 Ball::~Ball()
@@ -59,12 +68,6 @@ void Ball::OnDraw(CDC* pDC)
 	pDC->SelectObject(pOrigBrush);
 }
 
-Ball::Ball(int x, int y, int radius)
-{
-	m_iX = x;
-	m_iY = y;
-	R = radius;
-}
 
 bool Ball::isIntersected(const POINT p1, const POINT p2)
 {
