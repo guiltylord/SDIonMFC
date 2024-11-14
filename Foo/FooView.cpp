@@ -178,7 +178,6 @@ void CFooView::OnDraw(CDC* pDC)
 	{
 		
 		CBrush brush(HS_FDIAGONAL, m_Color);
-		//brush.CreateHatchBrush(;
 
 		CBrush* pOldBrush = pDC->SelectObject(&brush);
 
@@ -201,14 +200,8 @@ void CFooView::OnDraw(CDC* pDC)
 		}
 
 		if (!pointsVec.empty())
-		{
-			POINT* pointsArr = new POINT[pointsVec.size()];
-			for (size_t i = 0; i < pointsVec.size(); i++)
-				pointsArr[i] = pointsVec[i];
+			pDC->Polygon(pointsVec.data(), pointsVec.size());
 
-			pDC->Polygon(pointsArr, pointsVec.size());
-			delete[] pointsArr;
-		}
 		pDC->SelectObject(pOldBrush);
 	}
 	pDC->SelectObject(&oldPen);
