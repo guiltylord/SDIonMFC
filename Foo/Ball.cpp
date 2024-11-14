@@ -89,7 +89,7 @@ bool Ball::isIntersected(const POINT p1, const POINT p2)
 
 bool Ball::IsActive(POINT p)
 {
-	if (abs(p.x - X) <=R && abs(p.y - Y) <= R)
+	if (abs(p.x - X) <= R && abs(p.y - Y) <= R)
 		return true;
 	else
 		return false;

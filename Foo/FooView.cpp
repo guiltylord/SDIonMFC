@@ -140,74 +140,6 @@ void CFooView::OnDraw(CDC* pDC)
 	{
 		ball.OnDraw(pDC);
 	}
-	
-	
-	//double frequency = 2 * 3.14 / rc.Width();
-
-	//int height = rc.Height();
-	//int halfY = height/2;
-	//int width = rc.Width();
-	//int halfX = width/2;
-
-	//double my = 2.f / rc.Height();
-
-	//if (pDoc->m_bSinus)
-	//{
-	//	for (int x = 0; x < rc.Width(); x++)
-	//	{
-	//		double phase = x; // смещение
-	//		double frequency = (2 * PI * phase) / rc.Width(); // частота
-	//		double amplitude = -sin(frequency); // амплитуда
-	//		int y = (halfY + halfY * amplitude);
-
-	//		if (x == 0) {
-	//			pDC->MoveTo(x, y);
-	//		}
-	//		else
-	//		{
-	//			pDC->LineTo(x, y);
-	//		}
-	//	}
-	//}
-
-	//if (pDoc->m_bBrush)
-	//{
-	//	
-	//	CBrush brush(HS_FDIAGONAL, RGB(100,100,100));
-	//	//brush.CreateHatchBrush(;
-
-	//	CBrush* pOldBrush = pDC->SelectObject(&brush);
-
-	//	std::vector<POINT> pointsVec;
-	//	int width = rc.Width();
-	//	int height = rc.Height();
-
-	//	for (int x = 0; x < width; x++)
-	//	{
-	//		double phase = x;
-	//		double frequency = (2 * PI * phase) / width;
-	//		double amplitude = -sin(frequency);
-	//		int y = (height / 2) + (height / 2 * amplitude);
-
-	//		if (x > width / 2)
-	//		{
-	//			POINT point = { x, y };
-	//			pointsVec.push_back(point);
-	//		}
-	//	}
-
-	//	if (!pointsVec.empty())
-	//	{
-	//		POINT* pointsArr = new POINT[pointsVec.size()];
-	//		for (size_t i = 0; i < pointsVec.size(); i++)
-	//			pointsArr[i] = pointsVec[i];
-
-	//		pDC->Polygon(pointsArr, pointsVec.size());
-	//		delete[] pointsArr;
-	//	}
-	//	pDC->SelectObject(pOldBrush);
-	//}
-	//pDC->SelectObject(&oldPen);
 }
 
 
@@ -286,11 +218,6 @@ void CFooView::OnMouseMove(UINT nFlags, CPoint point)
 		{
 			m_pCurBall->X = point.x;
 			m_pCurBall->Y = point.y;
-		}
-		else
-		{
-			int i;
-			//m_pCurBall->MoveToValidP();
 		}
 		Invalidate();
 	}
