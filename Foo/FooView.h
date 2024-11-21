@@ -21,6 +21,7 @@ public:
 
 	Ball* m_pCurBall;
 	bool activeBall = FALSE;
+	bool isNew = TRUE;
 // Операции
 public:
 	void CreateBalls(CFooDoc* pDoc);

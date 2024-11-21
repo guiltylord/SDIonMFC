@@ -62,7 +62,7 @@ void CFooView::CreateBalls(CFooDoc* pDoc)
 
 	CRect rc;
 	GetClientRect(&rc);
-	
+
 	int heightMax = rc.Height() - rad;
 	int widthMax = rc.Width() - rad;
 	int heightMin = rad;
@@ -83,9 +83,9 @@ void CFooView::CreateBalls(CFooDoc* pDoc)
 		}
 
 		Ball ball(x, y);
-
 		pDoc->m_vBalls.push_back(ball);
 	}
+	isNew = FALSE;
 }
 
 bool CFooView::ValidPlacement(int x, int y, CFooDoc* pDoc)
@@ -131,13 +131,11 @@ void CFooView::OnDraw(CDC* pDC)
 	GetClientRect(&rc);
 	
 	
-	if (pDoc->m_vBalls.empty())
-	{
+	if (pDoc->m_vBalls.empty()) {
 		CreateBalls(pDoc);
 	}
 
-	for (auto& ball : pDoc->m_vBalls)
-	{
+	for (auto& ball : pDoc->m_vBalls) {
 		ball.OnDraw(pDC);
 	}
 }

@@ -45,13 +45,7 @@ BOOL CFooDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
-
-	// TODO: добавьте код повторной инициализации
-	// (Документы SDI будут повторно использовать этот документ)
-	// 
-	//Px = 500;
-	//Py = 500;
-
+		
 	CWnd* MainWnd = AfxGetMainWnd();
 
 	return TRUE;
@@ -65,26 +59,27 @@ BOOL CFooDoc::OnNewDocument()
 void CFooDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
-	{
-		// TODO: добавьте код сохранения
-		/*ar << iVer;
-
-		ar << Px;
-		ar << Py;
-		ar << Pz;
-
-		data.Serialize(ar);*/
+	{	// storing code
+		ar << m_vBalls.size();
+		for (auto ball : m_vBalls)
+		{
+			ball.Serialize(ar);
+		}
 	}
 	else
-	{
-		// TODO: добавьте код загрузки
-		/*ar >> iVer;
+	{	// loading code
+		size_t sz;
+		ar >> sz;
 
-		if (iVer != 1)
-			return;
-		ar >> Px;
-		ar >> Py;
-		ar >> Pz;*/
+		m_vBalls.reserve(sz);
+
+		for (size_t i=0;i<sz;i++)
+		{
+			Ball bl(0,0);
+			bl.Serialize(ar);
+			m_vBalls.push_back(bl);
+		}
+		//m_pView->UpdateWindow();
 	}
 }
 

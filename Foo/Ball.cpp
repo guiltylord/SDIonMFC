@@ -3,10 +3,14 @@
 
 #include "pch.h"
 #include "Foo.h"
+#include "FooDoc.h"
+#include "FooView.h"
+#include "MainFrm.h"
 #include "Ball.h"
 
 
 // Ball
+class CFooView;
 
 IMPLEMENT_DYNCREATE(Ball, CView)
 Ball::Ball()
@@ -114,3 +118,18 @@ void Ball::Dump(CDumpContext& dc) const
 
 
 // Ball message handlers
+
+
+void Ball::Serialize(CArchive& ar)
+{
+
+	if (ar.IsStoring()) {
+
+		ar << X << Y;
+	}
+	else {
+		int x, y;
+
+		ar >> X >> Y;
+	}
+}

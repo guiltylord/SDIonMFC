@@ -30,11 +30,6 @@ protected: // создать только из сериализации
 public:
 	bool m_bSinus, m_bBrush;
 
-	//int iVer = 1;
-	//int Px, Py, Pz;
-
-	//cl data;
-
 	std::vector<Ball> m_vBalls;
 	Ball* m_pCurBall;
 
