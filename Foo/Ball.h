@@ -1,43 +1,60 @@
 #pragma once
+#define BALL 0
+#define SQUARE 1
+
+#include "FooDoc.h"
+#include "FooView.h"
 
 
-// Ball view
-class CFooDoc;
-class CFooView;
-
-class Ball : public CView
+class Shape
 {
-	DECLARE_DYNCREATE(Ball)
-
-protected:
-	Ball();           // protected constructor used by dynamic creation
-
 public:
-	/*CFooDoc* pDoc;
-	CFooView* pView;*/
+	int type;
+	bool m_bActive = false;
+	//virtual Shape(const Shape&) = 0;
 	
-	Ball(const Ball&);
-	Ball(int x, int y);
-	virtual ~Ball();
+	//Shape(); 
+	//virtual ~Shape();
+
+	virtual void OnDraw(CDC* pDC) = 0;      // overridden to draw this view
+	virtual void Serialize(CArchive& ar) = 0;
+
+	//virtual bool isIntersected(const Shape *sh)=0;
+	
+	bool IsActive();
+	
+	virtual void CheckPoint(POINT pt) = 0; //проверяет точку если да меняет m_bactive
+
+	void WriteCoords(int x, int y);
+};
+
+
+
+class Ball : public Shape
+{
+public:
+	Ball(int x, int y) { X = x; Y = y; };
+	Ball() : Shape() {
+		type = BALL;
+	};
 
 	int R = 50;
 	int X, Y;
-	
-	bool isIntersected(const POINT p1, const POINT p2);
-	bool IsActive(POINT p);
 
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
-#ifdef _DEBUG
-	virtual void AssertValid() const;
-#ifndef _WIN32_WCE
-	virtual void Dump(CDumpContext& dc) const;
-#endif
-#endif
+	bool IsNotIntersected;
+	bool ValidatePlacement(int x, int y, CFooDoc* pDoc);
+	void CheckIntersection(const POINT p1, const POINT p2);
+	bool IsActive();
 
-protected:
-	DECLARE_MESSAGE_MAP()
-public:
+	bool isCollisioned;
+	bool CheckCollision(POINT p, CFooDoc* pDoc);
+	void CheckPoint(POINT pt);
+
+	void WriteCoords(int x, int y);
+
+	virtual void OnDraw(CDC* pDC);
 	virtual void Serialize(CArchive& ar);
+//private:
+//	Ball() {};
 };
-
 

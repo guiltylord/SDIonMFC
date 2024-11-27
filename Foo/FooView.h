@@ -6,7 +6,7 @@
 
 
 class CFooDoc;
-class Ball;
+class Shape;
 
 class CFooView : public CView
 {
@@ -16,16 +16,14 @@ protected: // создать только из сериализации
 
 // Атрибуты
 public:
+
 	CFooDoc* GetDocument() const;
+	CFooDoc* pDoc;
 	int step = 50;
 
-	Ball* m_pCurBall;
+	Shape* m_pCurBall;
 	bool activeBall = FALSE;
 	bool isNew = TRUE;
-// Операции
-public:
-	void CreateBalls(CFooDoc* pDoc);
-	bool ValidPlacement(int x, int y, CFooDoc* pDoc);
 	bool CheckCollision(POINT p, CFooDoc* pDoc);
 // Переопределение
 public:

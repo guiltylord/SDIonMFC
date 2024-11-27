@@ -14,6 +14,8 @@
 
 #include "FooDoc.h"
 #include "FooView.h"
+#include "Shape.h"
+#include "Ball.h"
 
 #include <propkey.h>
 
@@ -60,24 +62,23 @@ void CFooDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{	// storing code
-		ar << m_vBalls.size();
-		for (auto ball : m_vBalls)
-		{
-			ball.Serialize(ar);
+		ar << m_vObjects.size();
+		for (auto ball : m_vObjects) {
+			ball->Serialize(ar);
 		}
 	}
 	else
 	{	// loading code
+
 		size_t sz;
 		ar >> sz;
 
-		m_vBalls.reserve(sz);
+		m_vObjects.reserve(sz);
 
-		for (size_t i=0;i<sz;i++)
-		{
-			Ball bl(0,0);
-			bl.Serialize(ar);
-			m_vBalls.push_back(bl);
+		for (size_t i=0;i<sz;i++) {
+			Ball* bl = new Ball();
+			bl->Serialize(ar);
+			m_vObjects.push_back(bl);
 		}
 		//m_pView->UpdateWindow();
 	}
@@ -153,3 +154,46 @@ void CFooDoc::Dump(CDumpContext& dc) const
 
 
 // Команды CFooDoc
+
+void CFooDoc::OnCloseDocument()
+{
+	// TODO: Add your specialized code here and/or call the base class
+	//todo: delete all balls
+	CDocument::OnCloseDocument();
+}
+
+
+void CFooDoc::CreateBalls()
+{
+
+	//todo: delete all balls
+	int rad = 50;
+
+	CRect rc;
+	m_pView->GetClientRect(&rc);
+
+	int heightMax = rc.Height() - rad;
+	int widthMax = rc.Width() - rad;
+	int heightMin = rad;
+	int widthMin = rad;
+
+	srand(time(NULL));
+
+	for (int i = 0; i < 10; ++i)
+	{
+		int x, y;
+		auto ball = new Ball();
+		
+		x = rand() % (widthMax - widthMin + 1) + widthMin;
+		y = rand() % (heightMax - heightMin + 1) + heightMin;
+
+		while (ball->ValidatePlacement(x, y, this))
+		{
+			x = rand() % (widthMax - widthMin + 1) + widthMin;
+			y = rand() % (heightMax - heightMin + 1) + heightMin;
+		}
+		ball->WriteCoords(x,y);
+		m_vObjects.push_back(ball);
+	}
+	m_pView->isNew = FALSE;
+}

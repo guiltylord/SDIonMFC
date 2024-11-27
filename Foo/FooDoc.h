@@ -5,12 +5,13 @@
 
 #pragma once
 #include <vector>
-#include "Ball.h"
+#include "Shape.h"
 
 
 
 
 class CFooView;
+class Shape;
 
 class cl
 {
@@ -30,8 +31,11 @@ protected: // создать только из сериализации
 public:
 	bool m_bSinus, m_bBrush;
 
-	std::vector<Ball> m_vBalls;
-	Ball* m_pCurBall;
+	std::vector<Shape*> m_vObjects;
+	Shape* m_pCurBall;
+
+
+	void CreateBalls();
 
 	CFooView* m_pView;
 // Операции
@@ -65,4 +69,5 @@ protected:
 #endif // SHARED_HANDLERS
 public:
 
+	virtual void OnCloseDocument();
 };

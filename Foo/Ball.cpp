@@ -1,48 +1,10 @@
-// Ball.cpp : implementation file
-//
-
 #include "pch.h"
-#include "Foo.h"
-#include "FooDoc.h"
-#include "FooView.h"
-#include "MainFrm.h"
 #include "Ball.h"
-
-
-// Ball
-class CFooView;
-
-IMPLEMENT_DYNCREATE(Ball, CView)
-Ball::Ball()
-{
-}
-
-Ball::Ball(const Ball& toCopy) //toCopy null
-{
-	this->X = toCopy.X;
-	this->Y = toCopy.Y;
-}
-
-
-Ball::Ball(int x, int y)
-{
-	this->X = x;
-	this->Y = y;
-}
-
-Ball::~Ball()
-{
-}
-
-BEGIN_MESSAGE_MAP(Ball, CView)
-END_MESSAGE_MAP()
-
-
-// Ball drawing
+#include "FooDoc.h"
+class CFooDoc;
 
 void Ball::OnDraw(CDC* pDC)
 {
-	CDocument* pDoc = GetDocument();
 	CRgn region;
 
 	CPen pen;
@@ -57,11 +19,11 @@ void Ball::OnDraw(CDC* pDC)
 		return;
 
 	pDC->Ellipse(
-		X - R / 2, 
-		Y - R / 2, 
-		X + R / 2, 
+		X - R / 2,
+		Y - R / 2,
+		X + R / 2,
 		Y + R / 2);
-	
+
 
 	region.CreateFromPath(pDC);
 	pDC->PaintRgn(&region);
@@ -70,8 +32,72 @@ void Ball::OnDraw(CDC* pDC)
 	pDC->SelectObject(&oldPen);
 }
 
+void Ball::Serialize(CArchive& ar)
+{
 
-bool Ball::isIntersected(const POINT p1, const POINT p2)
+	if (ar.IsStoring()) {
+
+		ar << X << Y;
+	}
+	else {
+		int x, y;
+
+		ar >> X >> Y;
+	}
+}
+
+bool Ball::ValidatePlacement(int x, int y, CFooDoc* pDoc)
+{
+	for (auto& ball : pDoc->m_vObjects)
+	{
+		if (ball->type == BALL)
+		{
+			Ball* b = (Ball*)ball;
+			if (abs(b->X - x) < b->R * 2 && abs(b->Y - y) < R * 2)
+				return true;
+		}
+		return false;
+	}
+}
+
+bool Ball::CheckCollision(POINT p, CFooDoc* pDoc)
+{
+	for (auto object : pDoc->m_vObjects) {
+		if (object->type == BALL) {
+			auto ball = (Ball*)object;
+			auto ball2 = (Ball*)pDoc->m_pCurBall;
+			if (ball2->X == ball->X && ball2->Y == ball->Y) 
+				continue;
+
+			POINT p2;
+			p2.x = ball2->X;
+			p2.y = ball2->Y;
+
+			ball2->CheckIntersection(p, p2);
+
+			if (ball2->IsNotIntersected)
+				return false;
+		}
+	}
+	return true;
+}
+
+void Ball::CheckPoint(POINT pt)
+{
+	if (abs(pt.x - X) <= R && abs(pt.y - Y) <= R) {
+		m_bActive = true;
+		return;
+	}
+	m_bActive = false;
+}
+
+void Ball::WriteCoords(int x, int y)
+{
+	X = x;
+	Y = y;
+}
+
+void Ball::CheckIntersection(const POINT p1, const POINT p2)
 {
 	float vectorFirst = sqrt(pow(X - p1.x, 2) + pow(Y - p1.y, 2));
 
@@ -86,50 +112,7 @@ bool Ball::isIntersected(const POINT p1, const POINT p2)
 	float distanceToProjection = sqrt(pow(perpX - p2.x, 2) + pow(perpY - p2.y, 2));
 
 	if (distanceToProjection >= R || projection < 0 || sqrt(pow(X - p2.x, 2) + pow(Y - p2.y, 2)) > R)
-		return true;
+		this->IsNotIntersected =  true;
 
-	return false;
-}
-
-bool Ball::IsActive(POINT p)
-{
-	if (abs(p.x - X) <= R && abs(p.y - Y) <= R)
-		return true;
-	else
-		return false;
-}
-
-
-// Ball diagnostics
-
-#ifdef _DEBUG
-void Ball::AssertValid() const
-{
-	CView::AssertValid();
-}
-
-#ifndef _WIN32_WCE
-void Ball::Dump(CDumpContext& dc) const
-{
-	CView::Dump(dc);
-}
-#endif
-#endif //_DEBUG
-
-
-// Ball message handlers
-
-
-void Ball::Serialize(CArchive& ar)
-{
-
-	if (ar.IsStoring()) {
-
-		ar << X << Y;
-	}
-	else {
-		int x, y;
-
-		ar >> X >> Y;
-	}
+	this->IsNotIntersected = false;
 }

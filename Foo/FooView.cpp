@@ -11,6 +11,7 @@
 #include "Foo.h"
 #endif
 
+#include "Shape.h"
 #include "Ball.h"
 #include "FooDoc.h"
 #include "FooView.h"
@@ -42,6 +43,8 @@ END_MESSAGE_MAP()
 CFooView::CFooView() noexcept
 {
 	// TODO: добавьте код создания
+
+	pDoc = GetDocument();
 }
 
 CFooView::~CFooView()
@@ -56,64 +59,9 @@ BOOL CFooView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
-void CFooView::CreateBalls(CFooDoc* pDoc)
-{
-	int rad = 50;
 
-	CRect rc;
-	GetClientRect(&rc);
 
-	int heightMax = rc.Height() - rad;
-	int widthMax = rc.Width() - rad;
-	int heightMin = rad;
-	int widthMin = rad;
 
-	srand(time(NULL));
-
-	for (int i = 0; i < 10; ++i)
-	{
-		int x, y;
-		x = rand() % (widthMax - widthMin + 1) + widthMin;
-		y = rand() % (heightMax - heightMin + 1) + heightMin;
-
-		while (ValidPlacement(x, y, pDoc))
-		{
-			x = rand() % (widthMax - widthMin + 1) + widthMin;
-			y = rand() % (heightMax - heightMin + 1) + heightMin;
-		}
-
-		Ball ball(x, y);
-		pDoc->m_vBalls.push_back(ball);
-	}
-	isNew = FALSE;
-}
-
-bool CFooView::ValidPlacement(int x, int y, CFooDoc* pDoc)
-{
-	for (auto& ball : pDoc->m_vBalls)
-	{
-		if (abs(ball.X - x) < ball.R * 2 && abs(ball.Y - y) < ball.R * 2)
-			return true;
-	}
-	return false;
-}
-
-bool CFooView::CheckCollision(POINT p, CFooDoc* pDoc)
-{
-	for (auto& ball : pDoc->m_vBalls)
-	{
-		if (m_pCurBall->X == ball.X && m_pCurBall->Y == ball.Y)
-			continue;
-
-		POINT p2;
-		p2.x = ball.X;
-		p2.y = ball.Y;
-
-		if (!m_pCurBall->isIntersected(p, p2))
-			return false;
-	}
-	return true;
-}
 
 // Рисование CFooView
 void CFooView::OnDraw(CDC* pDC)
@@ -131,12 +79,12 @@ void CFooView::OnDraw(CDC* pDC)
 	GetClientRect(&rc);
 	
 	
-	if (pDoc->m_vBalls.empty()) {
-		CreateBalls(pDoc);
+	if (pDoc->m_vObjects.empty()) {
+		pDoc->CreateBalls();
 	}
 
-	for (auto& ball : pDoc->m_vBalls) {
-		ball.OnDraw(pDC);
+	for (auto& object : pDoc->m_vObjects) {
+		object->OnDraw(pDC);
 	}
 }
 
@@ -189,13 +137,17 @@ void CFooView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	for (auto& ball : pDoc->m_vBalls)
+	for (auto& object : pDoc->m_vObjects)
 	{
-		if (ball.IsActive(point))
-		{
-			activeBall = true;
-			m_pCurBall = &ball;
-			break;
+		if (object->type == BALL) {
+
+			auto b = (Ball*)object;
+			b->CheckPoint(point);
+			if (b->m_bActive) {
+				activeBall = true;
+				m_pCurBall = object;
+				break;
+			}
 		}
 	}
 }
@@ -204,18 +156,15 @@ void CFooView::OnLButtonDown(UINT nFlags, CPoint point)
 void CFooView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
-	if (activeBall)
-	{
-
+	if (activeBall) {
 		CFooDoc* pDoc = GetDocument();
 
 		if (!pDoc)
 			return;
 
-		if (CheckCollision(point, pDoc))
-		{
-			m_pCurBall->X = point.x;
-			m_pCurBall->Y = point.y;
+		Ball* b2 = (Ball*)m_pCurBall;
+		if (b2->CheckCollision(point, pDoc)) {
+			b2->WriteCoords(point.x, point.y);
 		}
 		Invalidate();
 	}

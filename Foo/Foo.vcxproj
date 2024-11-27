@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="Foo.h" />
     <ClInclude Include="FooDoc.h" />
     <ClInclude Include="FooView.h" />
@@ -195,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Foo.cpp" />
     <ClCompile Include="FooDoc.cpp" />
     <ClCompile Include="FooView.cpp" />
