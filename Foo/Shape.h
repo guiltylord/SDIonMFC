@@ -1,6 +1,7 @@
 #pragma once
 
-
+#define BALL 0
+#define SQUARE 1
 // Shape view
 
 class Shape {

@@ -81,6 +81,7 @@ void CFooView::OnDraw(CDC* pDC)
 	
 	if (pDoc->m_vObjects.empty()) {
 		pDoc->CreateBalls();
+		pDoc->CreateSquares();
 	}
 
 	for (auto& object : pDoc->m_vObjects) {

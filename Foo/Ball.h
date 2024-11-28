@@ -1,6 +1,5 @@
 #pragma once
-#define BALL 0
-#define SQUARE 1
+
 //
 //#include "FooDoc.h"
 //#include "FooView.h"

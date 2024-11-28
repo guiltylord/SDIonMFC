@@ -36,6 +36,7 @@ public:
 
 
 	void CreateBalls();
+	void CreateSquares();
 
 	CFooView* m_pView;
 // Операции

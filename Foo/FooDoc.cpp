@@ -16,12 +16,14 @@
 #include "FooView.h"
 #include "Shape.h"
 #include "Ball.h"
+#include "Square.h"
 
 #include <propkey.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+#include <chrono>
 
 // CFooDoc
 
@@ -50,6 +52,7 @@ BOOL CFooDoc::OnNewDocument()
 		
 	CWnd* MainWnd = AfxGetMainWnd();
 	return TRUE;
+
 }
 
 
@@ -176,7 +179,8 @@ void CFooDoc::CreateBalls()
 	int heightMin = rad;
 	int widthMin = rad;
 
-	srand(time(NULL));
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count(); 
+	srand(seed);
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -193,6 +197,41 @@ void CFooDoc::CreateBalls()
 		}
 		ball->WriteCoords(x,y);
 		m_vObjects.push_back(ball);
+	}
+	m_pView->isNew = FALSE;
+}
+
+void CFooDoc::CreateSquares()
+{
+	//todo: delete all squares
+	int side = 50;
+
+	CRect rc;
+	m_pView->GetClientRect(&rc);
+
+	int heightMax = rc.Height() - side;
+	int widthMax = rc.Width() - side;
+	int heightMin = side;
+	int widthMin = side;
+
+	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+	srand(seed);
+
+	for (int i = 0; i < 10; ++i)
+	{
+		int x, y;
+		auto square = new Square();
+
+		x = rand() % (widthMax - widthMin + 1) + widthMin;
+		y = rand() % (heightMax - heightMin + 1) + heightMin;
+
+		while (square->ValidatePlacement(x, y, this))
+		{
+			x = rand() % (widthMax - widthMin + 1) + widthMin;
+			y = rand() % (heightMax - heightMin + 1) + heightMin;
+		}
+		square->WriteCoords(x, y);
+		m_vObjects.push_back(square);
 	}
 	m_pView->isNew = FALSE;
 }
