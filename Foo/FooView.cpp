@@ -44,7 +44,7 @@ CFooView::CFooView() noexcept
 {
 	// TODO: добавьте код создания
 
-	pDoc = GetDocument();
+	//pDoc = GetDocument();
 }
 
 CFooView::~CFooView()
@@ -145,7 +145,7 @@ void CFooView::OnLButtonDown(UINT nFlags, CPoint point)
 			b->CheckPoint(point);
 			if (b->m_bActive) {
 				activeBall = true;
-				m_pCurBall = object;
+				pDoc->m_pCurBall = object;
 				break;
 			}
 		}
@@ -161,10 +161,13 @@ void CFooView::OnMouseMove(UINT nFlags, CPoint point)
 
 		if (!pDoc)
 			return;
+		
+		Ball* b2 = (Ball*)pDoc->m_pCurBall;
 
-		Ball* b2 = (Ball*)m_pCurBall;
 		if (b2->CheckCollision(point, pDoc)) {
 			b2->WriteCoords(point.x, point.y);
+			b2->X = point.x;/*
+			b2->Y = point.y;*/
 		}
 		Invalidate();
 	}
@@ -177,6 +180,15 @@ void CFooView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 	activeBall = false;
-	m_pCurBall = nullptr;
+	GetDocument()->m_pCurBall = nullptr;
 	CView::OnLButtonUp(nFlags, point);
+}
+
+void CFooView::OnInitialUpdate()
+{
+	CView::OnInitialUpdate();
+
+	// TODO: Add your specialized code here and/or call the base class
+	pDoc = GetDocument();
+	pDoc->m_pView = this;
 }

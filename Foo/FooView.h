@@ -21,7 +21,7 @@ public:
 	CFooDoc* pDoc;
 	int step = 50;
 
-	Shape* m_pCurBall;
+	//Shape* m_pCurBall;
 	bool activeBall = FALSE;
 	bool isNew = TRUE;
 	bool CheckCollision(POINT p, CFooDoc* pDoc);
@@ -51,6 +51,7 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	virtual void OnInitialUpdate();
 };
 
 #ifndef _DEBUG  // версия отладки в FooView.cpp

@@ -66,21 +66,22 @@ bool Ball::CheckCollision(POINT p, CFooDoc* pDoc)
 		if (object->type == BALL) {
 			auto ball = (Ball*)object;
 			auto ball2 = (Ball*)pDoc->m_pCurBall;
-			if (ball2->X == ball->X && ball2->Y == ball->Y) 
+			if (ball2->X == ball->X && ball2->Y == ball->Y)
 				continue;
 
 			POINT p2;
-			p2.x = ball2->X;
-			p2.y = ball2->Y;
+			p2.x = ball->X;
+			p2.y = ball->Y;
 
 			ball2->CheckIntersection(p, p2);
 
 			if (ball2->IsNotIntersected)
-				return false;
+				return false; // Если есть пересечение, возвращаем false
 		}
 	}
-	return true;
+	return true; // Если пересечений нет, возвращаем true
 }
+
 
 void Ball::CheckPoint(POINT pt)
 {
@@ -93,8 +94,8 @@ void Ball::CheckPoint(POINT pt)
 
 void Ball::WriteCoords(int x, int y)
 {
-	X = x;
-	Y = y;
+	this ->X = x;
+	this ->Y = y;
 }
 
 void Ball::CheckIntersection(const POINT p1, const POINT p2)
@@ -112,7 +113,7 @@ void Ball::CheckIntersection(const POINT p1, const POINT p2)
 	float distanceToProjection = sqrt(pow(perpX - p2.x, 2) + pow(perpY - p2.y, 2));
 
 	if (distanceToProjection >= R || projection < 0 || sqrt(pow(X - p2.x, 2) + pow(Y - p2.y, 2)) > R)
-		this->IsNotIntersected =  true;
-
-	this->IsNotIntersected = false;
+		this->IsNotIntersected = false; // Если пересечение есть, устанавливаем false
+	else
+		this->IsNotIntersected = true; // Если пересечения нет, устанавливаем true
 }

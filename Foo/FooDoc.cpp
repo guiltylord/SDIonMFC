@@ -49,7 +49,6 @@ BOOL CFooDoc::OnNewDocument()
 		return FALSE;
 		
 	CWnd* MainWnd = AfxGetMainWnd();
-
 	return TRUE;
 }
 
